@@ -24,22 +24,22 @@ public class Worker : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
 		worldData.Add(new KeyValuePair<string, object>("hasBakes", (inv.Bakes > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.wheatLevel > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasRawFlour", (inv.breadLevel > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasMeat", (inv.breadLevel < 2) ));
-		worldData.Add(new KeyValuePair<string, object>("hasFish", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHerbs", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBerries", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasManure", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHammer", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasPlanks", (inv.breadLevel > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWeapon", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasNails", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCoins", (inv.breadLevel > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.breadLevel > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.breadLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.Flour > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasRawFlour", (inv.RawFlour > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasMeat", (inv.Meat < 2) ));
+		worldData.Add(new KeyValuePair<string, object>("hasFish", (inv.Fish > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHerbs", (inv.Herbs > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasBerries", (inv.Berries > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasManure", (inv.Manure > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHammer", (inv.Hammer > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasPlanks", (inv.Planks > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasWeapon", (inv.Weapon > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasNails", (inv.Nails > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasCoins", (inv.Coins > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.Trap > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.CaughtAnimal > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.cocoaBalls > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));
 		
 		
 		return worldData;
