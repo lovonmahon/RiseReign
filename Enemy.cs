@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public abstract class Enemy : MonoBehaviour, IGOAP {
 
 	public Animator animator;
-	public Rigidbody2D rigidBody;
-	public BoxCollider2D boxCollider;
+	public Rigidbody rigidBody;
+	public BoxCollider boxCollider;
 	public PlayerMovement player;
 
 	public int health;
