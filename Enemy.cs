@@ -42,10 +42,53 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 		HashSet<KeyValuePair<string, object>> worldData = new HashSet<KeyValuePair<string, object>> ();
 		worldData.Add (new KeyValuePair<string, object> ("damagePlayer", false)); //to-do: change player's state for world data here
 		worldData.Add (new KeyValuePair<string, object> ("evadePlayer", false));
+		worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasBakes", (inv.Bakes > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.wheatLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasRawFlour", (inv.breadLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasMeat", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasFish", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHerbs", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasBerries", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasManure", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHammer", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasPlanks", (inv.breadLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasWeapon", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasNails", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasCoins", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.breadLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.breadLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.cocoaBalls > 1) ));
 		return worldData;
 	}
 
 	public abstract HashSet<KeyValuePair<string, object>> createGoalState ();
+	{
+		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
+		goal.Add(new KeyValuePair<string, object>("hasFishingRod", true ));
+		goal.Add(new KeyValuePair<string, object>("hasWheat", true ));
+		goal.Add(new KeyValuePair<string, object>("hasBakes", true ));
+		goal.Add(new KeyValuePair<string, object>("hasBakingFlour", true ));
+		goal.Add(new KeyValuePair<string, object>("hasRawFlour", true ));
+		goal.Add(new KeyValuePair<string, object>("hasMeat", true ));
+		goal.Add(new KeyValuePair<string, object>("hasFish", true ));
+		goal.Add(new KeyValuePair<string, object>("hasHerbs", true ));
+		goal.Add(new KeyValuePair<string, object>("hasBerries", true ));
+		goal.Add(new KeyValuePair<string, object>("hasManure", true ));
+		goal.Add(new KeyValuePair<string, object>("hasHammer", true ));
+		goal.Add(new KeyValuePair<string, object>("hasPlanks", true ));
+		goal.Add(new KeyValuePair<string, object>("hasWeapon", true ));
+		goal.Add(new KeyValuePair<string, object>("hasNails", true ));
+		goal.Add(new KeyValuePair<string, object>("hasCoins", true ));
+		goal.Add(new KeyValuePair<string, object>("hasTrap", true ));
+		goal.Add(new KeyValuePair<string, object>("hasAnimalCaught", true ));
+		goal.Add(new KeyValuePair<string, object>("hasCocoaBalls", true ));
+		goal.Add(new KeyValuePair<string, object>("hasCocoaTea", true ));
+
+		return goal;
+	}
 
 	public void planFailed (HashSet<KeyValuePair<string, object>> failedGoal){
 		
