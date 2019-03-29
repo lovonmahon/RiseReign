@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Enemy : MonoBehaviour, IGOAP {
+public abstract class Enemy : MonoBehaviour, IGoap {
 
 	public Animator animator;
 	public Rigidbody rigidBody;
