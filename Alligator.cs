@@ -30,6 +30,7 @@ public class Alligator : Enemy {
 		HashSet<KeyValuePair<string, object>> goal = new HashSet<KeyValuePair<string, object>> ();
 		goal.Add (new KeyValuePair<string, object> ("damagePlayer", true));
 		goal.Add (new KeyValuePair<string, object> ("stayAlive", true));
+		goal.Add(new KeyValuePair<string, object>("hasMeat", true ));//go hunt an animal
 		return goal;
 	}
 }
