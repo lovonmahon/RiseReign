@@ -43,7 +43,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         public Slider Hbar;
         public Slider Tbar;
         public Slider healthBar;
-
+	
+	public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
+	public AudioClip deathClip;                                 // The audio clip to play when the player dies.
+	public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
+    	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
+	AudioSource playerAudio;                                    // Reference to the AudioSource component.
 
 		void Start()
 		{
@@ -52,6 +57,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Capsule = GetComponent<CapsuleCollider>();
 			m_CapsuleHeight = m_Capsule.height;
 			m_CapsuleCenter = m_Capsule.center;
+			playerAudio = GetComponent <AudioSource> ();
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
@@ -84,6 +90,21 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             {
                 thirst = 0;
             }
+	    
+	    if(damaged)
+        {
+            // ... set the colour of the damageImage to the flash colour.
+            damageImage.color = flashColour;
+        }
+        // Otherwise...
+        else
+        {
+            // ... transition the colour back to clear.
+            damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+        }
+
+        // Reset the damaged flag.
+        damaged = false;
         }
 
 
