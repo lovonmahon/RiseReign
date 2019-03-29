@@ -63,49 +63,49 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
 		}
 
-        void Update()
-        {
-            healthBar.value = health;
-            Hbar.value = hunger;
-            Tbar.value = thirst;
-
-            hunger = hunger - (hungerRate * Time.deltaTime);
-            thirst = thirst - (thirstRate * Time.deltaTime);
-
-            if (health <= 0)
-            {
-                health = 0;
-                m_Animator.SetTrigger("dead");
-                gameObject.GetComponent<ThirdPersonUserControl>().enabled = false;
-            }
-            if(hunger <= 0 || thirst <= 0)
-            {
-              health = health - (deathRate * Time.deltaTime);
-           }
-            if(hunger <= 0)
-            {
-                hunger = 0;
-            }
-            if (thirst <= 0)
-            {
-                thirst = 0;
-            }
-	    
-	    if(damaged)
-        {
-            // ... set the colour of the damageImage to the flash colour.
-            damageImage.color = flashColour;
-        }
-        // Otherwise...
-        else
-        {
-            // ... transition the colour back to clear.
-            damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-        }
-
-        // Reset the damaged flag.
-        damaged = false;
-        }
+               void Update()
+               {
+                   healthBar.value = health;
+                   Hbar.value = hunger;
+                   Tbar.value = thirst;
+       
+                   hunger = hunger - (hungerRate * Time.deltaTime);
+                   thirst = thirst - (thirstRate * Time.deltaTime);
+       
+                   if (health <= 0)
+                   {
+                       health = 0;
+                       m_Animator.SetTrigger("dead");
+                       gameObject.GetComponent<ThirdPersonUserControl>().enabled = false;
+                   }
+                   if(hunger <= 0 || thirst <= 0)
+                   {
+                     health = health - (deathRate * Time.deltaTime);
+                  }
+                   if(hunger <= 0)
+                   {
+                       hunger = 0;
+                   }
+                   if (thirst <= 0)
+                   {
+                       thirst = 0;
+                   }
+	           
+	           if(damaged)
+                   {
+                       // ... set the colour of the damageImage to the flash colour.
+                       damageImage.color = flashColour;
+                   }
+                   // Otherwise...
+                   else
+                   {
+                       // ... transition the colour back to clear.
+                       damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+                   }
+       
+                   // Reset the damaged flag.
+                   damaged = false;
+                   }
 
 
 		public void TakeDamage (int amount)
