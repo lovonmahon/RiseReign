@@ -70,6 +70,11 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.breadLevel > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
 		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.cocoaBalls > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasOre", (backpack.numOre > 0) ));
+		worldData.Add(new KeyValuePair<string, object>("hasLogs", (backpack.numLogs > 0) ));
+		worldData.Add(new KeyValuePair<string, object>("hasFirewood", (backpack.numFirewood > 0) ));
+		worldData.Add(new KeyValuePair<string, object>("hasTool", (backpack.tool != null) ));
+		
 		return worldData;
 	}
 
