@@ -8,6 +8,7 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 	public Rigidbody rigidBody;
 	public BoxCollider boxCollider;
 	public PlayerMovement player;
+	public BackpackComponent backpack;
 
 	public int health;
 	public int strength;
@@ -23,8 +24,16 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 	protected float maxStamina;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+	{
+		if (backpack == null)
+			backpack = gameObject.AddComponent ("BackpackComponent" ) as BackpackComponent;
+		if (backpack.tool == null) {
+			GameObject prefab = Resources.Load<GameObject> (backpack.toolType);
+			GameObject tool = Instantiate (prefab, transform.position, transform.rotation) as GameObject;
+			backpack.tool = tool;
+			tool.transform.parent = transform; // attach the tool
+		}
 	}
 	
 	// Update is called once per frame
