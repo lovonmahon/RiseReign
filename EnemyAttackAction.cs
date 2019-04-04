@@ -33,23 +33,14 @@ public class EnemyAttackAction : GOAPAction {
 	}
 
 	public override bool perform(GameObject agent){
-		Canine can = agent.GetComponent<Canine> ();
-		if (can.stamina >= (cost)) {
-			
-			can.animator.Play ("Attack");
+		Enemy currA = agent.GetComponent<Enemy> ();
+		currA.stamina -= (500 - cost);
 
-			int damage = can.strength;
-			if (can.player.isBlocking) {
-				damage -= can.player.defense;
-			}
+		Animator currAnim = GetComponentInParent<Animator> ();
+		//spellAnim.wrapMode = WrapMode.ClampForever; //done in inspector right now
+		currAnim.Play("attack");
 
-			can.player.health -= damage;
-			can.stamina -= cost;
-
-			attacked = true;
-			return true;
-		} else {
-			return false;
-		}
+		attacked = true;
+		return attacked;
 	}
 }
