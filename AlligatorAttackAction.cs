@@ -33,23 +33,14 @@ public class AlligatorAttackAction : GOAPAction {
 	}
 
 	public override bool perform(GameObject agent){
-		Reptile rep = agent.GetComponent<Alligator> ();
-		if (rep.stamina >= (cost)) {
-			
-			rep.animator.Play ("Attack");
+		Alligator gator = agent.GetComponent<Alligator> ();
+		gator.stamina -= (500 - cost);
 
-			int damage = can.strength;
-			if (rep.player.isBlocking) {
-				damage -= rep.player.defense;
-			}
+		Animator currAnim = GetComponentInParent<Animator> ();
+		
+		currAnim.Play("attack");
 
-			rep.player.health -= damage;
-			rep.stamina -= cost;
-
-			attacked = true;
-			return true;
-		} else {
-			return false;
-		}
+		attacked = true;
+		return attacked;
 	}
 }
