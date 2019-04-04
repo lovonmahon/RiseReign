@@ -4,6 +4,10 @@ using System.Collections;
 public class EnemyAttackAction : GOAPAction {
 
 	private bool attacked = false;
+	//Try caching the animator if performance suffers from initializing it in the perform().
+	/*void Awake(){
+		anim = GameObject.GetComponent<Animator>();
+	}*/
 
 	public EnemyAttackAction(){
 		addEffect ("damagePlayer", true);
