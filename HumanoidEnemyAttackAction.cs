@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class EnemyAttackAction : GOAPAction {
+public class HumanoidEnemyAttackAction : GOAPAction {
 
 	private bool attacked = false;
 	//Try caching the animator if performance suffers from initializing it in the perform().
@@ -9,7 +9,7 @@ public class EnemyAttackAction : GOAPAction {
 		anim = GameObject.GetComponent<Animator>();
 	}*/
 
-	public EnemyAttackAction(){
+	public HumanoidEnemyAttackAction(){
 		addEffect ("damagePlayer", true);
 		cost = 100f;
 	}
@@ -33,7 +33,7 @@ public class EnemyAttackAction : GOAPAction {
 	}
 
 	public override bool perform(GameObject agent){
-		Enemy currA = agent.GetComponent<Enemy> ();
+		HumanoidEnemy currA = agent.GetComponent<HumanoidEnemy> ();
 		currA.stamina -= (500 - cost);
 
 		Animator currAnim = GetComponentInParent<Animator> ();
