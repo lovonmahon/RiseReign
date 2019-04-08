@@ -106,6 +106,34 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                    // Reset the damaged flag.
                    damaged = false;
                    }
+		   //swim code below..needs updating
+		    private void OnTriggerEnter(Collider Other)
+     {
+         GameObject player = this.gameObject;
+         if (player.tag == "Player")
+         {
+             player.GetComponent<Rigidbody>().drag = 5;
+             player.GetComponent<Rigidbody>().useGravity = false;
+             player.GetComponent<Rigidbody>().velocity = new Vector3(0f, -.5f, 0f);
+             player.GetComponent<Animator>().SetBool("IsSwimming", true);
+             player.GetComponent<MouseControls>().isSwimming = true;
+ 
+         }
+     }
+     private void OnTriggerExit(Collider Other)
+     {
+         GameObject player = this.gameObject;
+         if (player.tag == "Player")
+         {
+             player.GetComponent<Rigidbody>().drag = 1;
+             player.GetComponent<Rigidbody>().useGravity = true;
+             player.GetComponent<Rigidbody>().velocity = new Vector3(0f, 0f, 0f);
+             player.GetComponent<Animator>().SetBool("IsSwimming", false);
+             player.GetComponent<MouseControls>().isSwimming = false;
+ 
+         }
+     }
+		   
 
 
 		public void TakeDamage (int amount)
