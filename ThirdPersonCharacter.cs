@@ -61,6 +61,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 			m_Rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 			m_OrigGroundCheckDistance = m_GroundCheckDistance;
+			GameObject player = new GameObject("Player");
 		}
 
                void Update()
@@ -109,7 +110,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		   //swim code below..needs updating
 		    private void OnTriggerEnter(Collider Other)
      {
-         GameObject player = this.gameObject;
          if (player.tag == "Player")
          {
              player.GetComponent<Rigidbody>().drag = 5;
@@ -122,7 +122,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
      }
      private void OnTriggerExit(Collider Other)
      {
-         GameObject player = this.gameObject;
          if (player.tag == "Player")
          {
              player.GetComponent<Rigidbody>().drag = 1;
