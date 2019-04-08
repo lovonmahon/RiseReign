@@ -18,7 +18,7 @@ public class Raider : Enemy {
 		acceleration = (speed / 10) / 4;
 
 		animator = GetComponent<Animator> ();
-		player = GameObject.Find ("Player").GetComponent<PlayerMovement>();
+		player = GameObject.FindWithtag("Player").GetComponent<PlayerMovement>();
 
 	}
 
