@@ -18,7 +18,7 @@ public class Wolf : Enemy {
 		acceleration = (speed / 10) / 4;
 
 		animator = GetComponent<Animator> ();
-		player = GameObject.Find ("Player").GetComponent<PlayerMovement>();
+		player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
 
 	}
 
