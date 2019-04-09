@@ -17,7 +17,8 @@ public class Alligator : Enemy {
 		initialSpeed = (speed / 10) / 2;
 		acceleration = (speed / 10) / 4;
 
-		animator = GetComponent<Animator> ();
+		animator = GetComponent<Animator>();
+		nav = GetComponent<NavMeshAgent>();
 		player = GameObject.Find ("Player").GetComponent<PlayerMovement>();
 
 	}
