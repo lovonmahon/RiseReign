@@ -96,6 +96,7 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 
         // Tell the animator that the enemy is dead.
         anim.SetTrigger ("Dead");
+	GetComponent<NavMeshAgent>.disable;
 
         // Change the audio clip of the audio source to the death clip and play it (this will stop the hurt clip playing).
         enemyAudio.clip = deathClip;
