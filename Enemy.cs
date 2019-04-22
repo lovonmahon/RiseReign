@@ -53,13 +53,17 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 			Invoke ("passiveRegen", 1.0f);
 		} else {
 			stamina = maxStamina;
-		}
-		
+		}		
 		if(currentHealth <= 0)
         	{
             	// ... the enemy is dead.
             		Death ();
         	}
+		if(isSinking)
+        	{
+            	// ... move the enemy down by the sinkSpeed per second.
+            		transform.Translate (Vector3.down * sinkSpeed * Time.deltaTime);
+       		}
 	}
 
 	public virtual void passiveRegen();
