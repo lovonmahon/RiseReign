@@ -54,6 +54,12 @@ public abstract class Enemy : MonoBehaviour, IGoap {
 		} else {
 			stamina = maxStamina;
 		}
+		
+		if(currentHealth <= 0)
+        	{
+            	// ... the enemy is dead.
+            		Death ();
+        	}
 	}
 
 	public virtual void passiveRegen();
@@ -78,11 +84,7 @@ public abstract class Enemy : MonoBehaviour, IGoap {
         hitParticles.Play();
 
         // If the current health is less than or equal to zero...
-        if(currentHealth <= 0)
-        {
-            // ... the enemy is dead.
-            Death ();
-        }
+        
     }
 
 
