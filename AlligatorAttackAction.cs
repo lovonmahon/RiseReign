@@ -28,7 +28,7 @@ public class AlligatorAttackAction : GOAPAction {
 	}
 
 	public override bool checkProceduralPrecondition(GameObject agent){
-		target = GameObject.Find ("Player");
+		target = GameObject.FindWithTag("Player");
 		return target != null;
 	}
 
