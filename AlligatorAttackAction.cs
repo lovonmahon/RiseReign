@@ -9,7 +9,7 @@ public class AlligatorAttackAction : GOAPAction {
 		anim = GameObject.GetComponent<Animator>();
 	}*/
 
-	public EnemyAttackAction(){
+	public AlligatorAttackAction(){
 		addEffect ("damagePlayer", true);
 		cost = 100f;
 	}
