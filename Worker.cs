@@ -99,6 +99,7 @@ public class Worker : MonoBehaviour, IGoap
 			Vector3 toTarget = agent.steeringTarget - this.transform.position;
          	float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
          	agent.acceleration = turnAngle * agent.speed;
+		UpdateAnimator();//to match animation to velocity.
 		}
 	}
 
@@ -120,5 +121,13 @@ public class Worker : MonoBehaviour, IGoap
 	public void PlanAborted (GoapAction aborter)
 	{
 
+	}
+	
+	private void UpdateAnimator()//taken from Mover.cs script to match animation with velocity.
+	{
+		Vector3 velocity = GetComponent<NavMeshAgent>().velocity;//get velocity of navmeshagent
+		Vector3 localVelocity = transform.InverseTransformDirection(velocity);//takes global and trafers to local velocity
+		float speed = localVelocity.z;//for forward direction.
+		GetComponent<Animator>().SetFloat("forwardSpeed", speed);//forward speed is the parameter on the blendtree for basic movement.  The speed variable is passed in to adjust speed from local velocity.
 	}
 }
