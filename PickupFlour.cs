@@ -9,6 +9,7 @@ public class PickupFlour : GoapAction {
 	public float workDuration = 2; // seconds
 	public Inventory stockpile;
 	Inventory inv;
+	Animator anim;
 	
 	public PickupFlour () {
 		addPrecondition ("hasRawFlour", true); 
@@ -24,7 +25,7 @@ public class PickupFlour : GoapAction {
 	
 	public override bool isDone ()
 	{
-		return completed;
+		return completed;		
 	}
 	
 	public override bool requiresInRange ()
@@ -41,6 +42,7 @@ public class PickupFlour : GoapAction {
 	{
 		if (startTime == 0)
 		{
+			anim.SetBool("pickup", true);
 			Debug.Log("Starting: " + name);
 			startTime = Time.time;
 		}
@@ -51,6 +53,7 @@ public class PickupFlour : GoapAction {
 			stockpile.bakingFlour -= 1;
 			inv.bakingFlour += 1;
 			completed = true;
+			anim.SetBool("pickup", false);
 		}
 		return true;
 	}
