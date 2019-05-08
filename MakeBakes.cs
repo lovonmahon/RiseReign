@@ -9,6 +9,7 @@ public class MakeBakes : GoapAction {
 	public float workDuration = 2; // seconds
 	public Inventory stockpile;
 	Inventory inv;
+	Animator anim;
 	
 	public MakeBakes () {
 		addPrecondition ("hasBakingFlour", true); 
@@ -41,6 +42,7 @@ public class MakeBakes : GoapAction {
 	{
 		if (startTime == 0)
 		{
+			anim.SetBool("cook", true);
 			Debug.Log("Starting: " + name);
 			startTime = Time.time;
 		}
@@ -51,6 +53,7 @@ public class MakeBakes : GoapAction {
 			stockpile.bakingFlour -= 1;
 			inv.Bakes += 4;
 			completed = true;
+			anim.SetBool("cook", false);
 		}
 		return true;
 	}
