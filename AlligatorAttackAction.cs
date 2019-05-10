@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AlligatorAttackAction : GOAPAction {
+public class AlligatorAttackAction : GoapAction {
 
 	private bool attacked = false;
 	//Try caching the animator if performance suffers from initializing it in the perform().
