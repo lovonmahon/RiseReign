@@ -45,6 +45,7 @@ public class MakeBakes : GoapAction {
 			anim.SetBool("cook", true);
 			Debug.Log("Starting: " + name);
 			startTime = Time.time;
+			anim.SetTrigger("prepareMeal");
 		}
 
 		if (Time.time - startTime > workDuration) 
