@@ -109,17 +109,18 @@ public abstract class Worker : MonoBehaviour, IGoap
          		float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
          		agent.acceleration = turnAngle * agent.speed;
 			UpdateAnimator();//to match animation to velocity.
-		}
-		//code to rotate character to look at player taken from 'line of sight' in penny udemy.
-		if(toTarget.magnitude < visDist && turnAngle < visAngle)
-		{			
+			//code to rotate character to look at player taken from 'line of sight' in penny udemy.
+			if(toTarget.magnitude < visDist && turnAngle < visAngle)
+			{			
 			toTarget.y = 0;
 
 			this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
-										Quaternion.LookRotation(direction), 
-										Time.deltaTime * rotationSpeed);		
+						  Quaternion.LookRotation(toTarget), 
+						  Time.deltaTime * rotationSpeed);		
 
+			}
 		}
+		
 	}
 
 	public void PlanFailed (HashSet<KeyValuePair<string, object>> failedGoal)
