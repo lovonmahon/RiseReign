@@ -4,7 +4,10 @@ using System.Collections.Generic;
 
 public class Alligator : Enemy {
 
-	// Use this for initialization
+	NavMeshAgent nav;
+  Animator anim;
+  
+  // Use this for initialization
 	void Start () {
 		stamina = 100f;
 		health = 50;
@@ -16,11 +19,10 @@ public class Alligator : Enemy {
 		terminalSpeed = speed / 10;
 		initialSpeed = (speed / 10) / 2;
 		acceleration = (speed / 10) / 4;
-
-		animator = GetComponent<Animator>();
-		nav = GetComponent<NavMeshAgent>();
-		player = GameObject.Find ("Player").GetComponent<PlayerMovement>();
-
+   
+		animator = gabeObject.GetComponent<Animator>();
+		player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+		nav = gameObject.GetComponent<NavMeshAgent>();	
 	}
 
 	public override void passiveRegen(){
