@@ -14,9 +14,11 @@ public abstract class Worker : MonoBehaviour, IGoap
 	[SerializeField] float rotationSpeed = 2.0f;
 	[SerializeField] float visDist = 20.0f;
 	[SerializeField] float visAngle = 30.0f;
+	[SerializeField] float chaseDiat = 10.0f;
 	[SerializeField] float shootDist = 20.0f;
 	[SerializeField] float throwDist = 10.0f;
 	[SerializeField] float meleeDist = 1.0f;
+	[SerializeField] float minDist = 2.0f;
 	//String state = "WORK";
 
 	void Start()
@@ -84,21 +86,21 @@ public abstract class Worker : MonoBehaviour, IGoap
 
 	public virtual bool MoveAgent(GoapAction nextAction) {
 		
-		//if we don't need to move anywhere
-		if(previousDestination == nextAction.target.transform.position)
-		{
-			nextAction.setInRange(true);
-			return true;
+		float dist = Vector3.Distance (transform.position, nextAction.target.transform.position);// compare distance to player
+		if (dist < chaseDist) {
+			Vector3 moveDirection = player.transform.position - transform.position;
+
+			Vector3 newPosition = moveDirection.normalized * Time.deltaTime;
+			transform.position += newPosition;
 		}
-		
-		agent.SetDestination(nextAction.target.transform.position);
-		
-		if (agent.hasPath && agent.remainingDistance <= meleeDist) {
+		if(dist <= minDist) {
 			nextAction.setInRange(true);
-			previousDestination = nextAction.target.transform.position;
 			return true;
-		} else
+		} else {
 			return false;
+		}
+	}
+}
 	}
 
 	void Update()
