@@ -86,19 +86,22 @@ public abstract class Worker : MonoBehaviour, IGoap
 
 	public virtual bool MoveAgent(GoapAction nextAction) {
 		
-		float dist = Vector3.Distance (transform.position, nextAction.target.transform.position);// compare distance to player
+		float dist = Vector3.Distance (transform.position, nextAction.target.transform.position);// compare distance to target
 		if (dist < chaseDist) {
 			Vector3 moveDirection = player.transform.position - transform.position;
 
 			Vector3 newPosition = moveDirection.normalized * Time.deltaTime;
 			transform.position += newPosition;
-		}
-		if(dist <= minDist) {
+			
+			if(dist <= minDist) {
 			nextAction.setInRange(true);
 			return true;
-		} else {
+			}
+		 	else {
 			return false;
+			}
 		}
+		
 	}
 }
 	}
