@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.AI;
 //To create different worker classes, rename this class to suit.
 
-public abstract class Worker : MonoBehaviour, IGoap
+public class Worker : MonoBehaviour, IGoap
 {
 	NavMeshAgent agent;
 	Animator anim;
@@ -14,11 +14,12 @@ public abstract class Worker : MonoBehaviour, IGoap
 	[SerializeField] float rotationSpeed = 2.0f;
 	[SerializeField] float visDist = 20.0f;
 	[SerializeField] float visAngle = 30.0f;
-	[SerializeField] float chaseDiat = 10.0f;
 	[SerializeField] float shootDist = 20.0f;
 	[SerializeField] float throwDist = 10.0f;
 	[SerializeField] float meleeDist = 1.0f;
-	[SerializeField] float minDist = 2.0f;
+	[SerializeField] float speed = 1.0f;
+	
+	bool stopAtTarget = false;
 	//String state = "WORK";
 
 	void Start()
@@ -26,88 +27,63 @@ public abstract class Worker : MonoBehaviour, IGoap
 		agent = this.GetComponent<NavMeshAgent>();
 		anim = this.GetComponent<Animator>();
 		inv = this.GetComponent<Inventory>();
-		stockpile = GetComponent<Inventory>();
+		stockpile = this.GetComponent<Inventory>();
 	}
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakes", (inv.Bakes > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.Flour > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasRawFlour", (inv.RawFlour > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasMeat", (inv.Meat < 2) ));
-		worldData.Add(new KeyValuePair<string, object>("hasFish", (inv.Fish > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHerbs", (inv.Herbs > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBerries", (inv.Berries > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasManure", (inv.Manure > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHammer", (inv.Hammer > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasPlanks", (inv.Planks > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWeapon", (inv.Weapon > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasNails", (inv.Nails > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCoins", (inv.Coins > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.Trap > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.CaughtAnimal > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));
-		
+		worldData.Add(new KeyValuePair<string, object>("damagePlayer", false ));
 		
 		return worldData;
 	}
 
-
 	public HashSet<KeyValuePair<string,object>> CreateGoalState ()
 	{
 		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
-		goal.Add(new KeyValuePair<string, object>("hasFishingRod", true ));
-		goal.Add(new KeyValuePair<string, object>("hasWheat", true ));
-		goal.Add(new KeyValuePair<string, object>("hasBakes", true ));
-		goal.Add(new KeyValuePair<string, object>("hasBakingFlour", true ));
-		goal.Add(new KeyValuePair<string, object>("hasRawFlour", true ));
-		goal.Add(new KeyValuePair<string, object>("hasMeat", true ));
-		goal.Add(new KeyValuePair<string, object>("hasFish", true ));
-		goal.Add(new KeyValuePair<string, object>("hasHerbs", true ));
-		goal.Add(new KeyValuePair<string, object>("hasBerries", true ));
-		goal.Add(new KeyValuePair<string, object>("hasManure", true ));
-		goal.Add(new KeyValuePair<string, object>("hasHammer", true ));
-		goal.Add(new KeyValuePair<string, object>("hasPlanks", true ));
-		goal.Add(new KeyValuePair<string, object>("hasWeapon", true ));
-		goal.Add(new KeyValuePair<string, object>("hasNails", true ));
-		goal.Add(new KeyValuePair<string, object>("hasCoins", true ));
-		goal.Add(new KeyValuePair<string, object>("hasTrap", true ));
-		goal.Add(new KeyValuePair<string, object>("hasAnimalCaught", true ));
-		goal.Add(new KeyValuePair<string, object>("hasCocoaBalls", true ));
-		goal.Add(new KeyValuePair<string, object>("hasCocoaTea", true ));
+		goal.Add(new KeyValuePair<string, object>("doJob", true ));
+	
 
 		return goal;
 	}
 
 
 	public virtual bool MoveAgent(GoapAction nextAction) {
+		float theDistance = Vector3.Distance(transform.position, nextAction.transform.position);
 		
-		float dist = Vector3.Distance (transform.position, nextAction.target.transform.position);// compare distance to target
-		if (dist < chaseDist) {
-			Vector3 moveDirection = player.transform.position - transform.position;
-
-			Vector3 newPosition = moveDirection.normalized * Time.deltaTime;
-			transform.position += newPosition;
-			
-			if(dist <= minDist) {
+		//if we don't need to move anywhere
+		
+		if(previousDestination == nextAction.target.transform.position)
+		{
 			nextAction.setInRange(true);
 			return true;
-			}
-		 	else {
+		}
+	/* if (agent.hasPath && agent.remainingDistance < 2) {
+			nextAction.setInRange(true);
+			previousDestination = nextAction.target.transform.position;
+			return true;
+		}*/
+		if(theDistance < visDist)
+		{
+			agent.isStopped = false;
+			agent.SetDestination(nextAction.transform.position);
+		}
+		
+		if(theDistance <= meleeDist)
+		{
+			nextAction.setInRange(true);
+			return true;
+		}
+		else
+		{
 			return false;
-			}
 		}
 		
 	}
-}
-	}
-
+	
 	void Update()
 	{
+		
 		if(agent.hasPath)
 		{
 			Vector3 toTarget = agent.steeringTarget - this.transform.position;
@@ -121,11 +97,10 @@ public abstract class Worker : MonoBehaviour, IGoap
 
 			this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
 						  Quaternion.LookRotation(toTarget), 
-						  Time.deltaTime * rotationSpeed);		
-
+						  Time.deltaTime * rotationSpeed);	
+			//this.transform.LookAt(target.position);//look at target
 			}
 		}
-		
 	}
 
 	public void PlanFailed (HashSet<KeyValuePair<string, object>> failedGoal)
