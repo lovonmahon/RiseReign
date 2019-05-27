@@ -1,3 +1,6 @@
+using UnityEngine;
+
+
 public class equipUnequip: MonoBehaviour{
 
 	public Transform Item, itemEquip, itemUnequip;
@@ -12,3 +15,16 @@ public class equipUnequip: MonoBehaviour{
 			item.position = itemUnequip.position;
 			item.rotation = itemUnequip.rotation;
 		}
+	}
+	
+	public void itemEquipped()
+	{
+		item_is_equipped = true;
+	}
+	
+	public void itemUnequipped()
+	{
+		item_is_equipped = false;
+	}
+}
+			
