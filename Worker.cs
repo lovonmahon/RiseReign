@@ -53,11 +53,11 @@ public class Worker : MonoBehaviour, IGoap
 		
 		//if we don't need to move anywhere
 		
-		if(previousDestination == nextAction.target.transform.position)
+		/*if(previousDestination == nextAction.target.transform.position)
 		{
 			nextAction.setInRange(true);
 			return true;
-		}
+		}*/
 	/* if (agent.hasPath && agent.remainingDistance < 2) {
 			nextAction.setInRange(true);
 			previousDestination = nextAction.target.transform.position;
@@ -65,8 +65,12 @@ public class Worker : MonoBehaviour, IGoap
 		}*/
 		if(theDistance < visDist)
 		{
-			agent.isStopped = false;
-			agent.SetDestination(nextAction.transform.position);
+			GetComponent<NavMeshAgent>().isStopped = false;
+			GetComponent<NavMeshAgent>().SetDestination(nextAction.transform.position);
+			Vector3 toTarget = agent.steeringTarget - this.transform.position;
+			toTarget.y = 0;
+			Quaternion qRotation = Quaternion.LookRotation(toTarget);
+			transform.rotation = Quaternion.Slerp(transform.rotation, qRotation, 0.005f);
 		}
 		
 		if(theDistance <= meleeDist)
@@ -86,14 +90,14 @@ public class Worker : MonoBehaviour, IGoap
 		
 		if(agent.hasPath)
 		{
-			Vector3 toTarget = agent.steeringTarget - this.transform.position;
+			
          		float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
          		agent.acceleration = turnAngle * agent.speed;
 			UpdateAnimator();//to match animation to velocity.
 			//code to rotate character to look at player taken from 'line of sight' in penny udemy.
 			if(toTarget.magnitude < visDist && turnAngle < visAngle)
 			{			
-			toTarget.y = 0;
+			
 
 			this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
 						  Quaternion.LookRotation(toTarget), 
