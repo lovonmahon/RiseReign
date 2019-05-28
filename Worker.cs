@@ -26,14 +26,15 @@ public class Worker : MonoBehaviour, IGoap
 	{
 		agent = this.GetComponent<NavMeshAgent>();
 		anim = this.GetComponent<Animator>();
-		inv = this.GetComponent<Inventory>();
-		stockpile = this.GetComponent<Inventory>();
+		inv = this.GetComponent<Inventory>();		
+		health = this.Getcomponent<Health>();
 	}
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
 		worldData.Add(new KeyValuePair<string, object>("damagePlayer", false ));
+		worldData.Add(new KeyValuePair<string, object>("escape", (health.value < 20) ));
 		
 		return worldData;
 	}
