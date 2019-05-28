@@ -49,20 +49,7 @@ public class Worker : MonoBehaviour, IGoap
 
 
 	public virtual bool MoveAgent(GoapAction nextAction) {
-		float theDistance = Vector3.Distance(transform.position, nextAction.transform.position);
-		
-		//if we don't need to move anywhere
-		
-		/*if(previousDestination == nextAction.target.transform.position)
-		{
-			nextAction.setInRange(true);
-			return true;
-		}*/
-	/* if (agent.hasPath && agent.remainingDistance < 2) {
-			nextAction.setInRange(true);
-			previousDestination = nextAction.target.transform.position;
-			return true;
-		}*/
+		float theDistance = Vector3.Distance(transform.position, nextAction.transform.position);	
 		if(theDistance < visDist)
 		{
 			GetComponent<NavMeshAgent>().isStopped = false;
