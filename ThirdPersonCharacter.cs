@@ -32,17 +32,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		bool isDead;//checks if player is dead.
 		bool damaged;//checks if player is damaged.
 
-        public float health = 100;
-        public float hunger = 100;
-        public float thirst = 100;
 
-        public float deathRate;
-        public float thirstRate;
-        public float hungerRate;
-
-        public Slider Hbar;
-        public Slider Tbar;
-        public Slider healthBar;
 	
 	public Image damageImage;                                   // Reference to an image to flash on the screen on being hurt.
 	public AudioClip deathClip;                                 // The audio clip to play when the player dies.
@@ -66,32 +56,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
                void Update()
                {
-                   healthBar.value = health;
-                   Hbar.value = hunger;
-                   Tbar.value = thirst;
-       
-                   hunger = hunger - (hungerRate * Time.deltaTime);
-                   thirst = thirst - (thirstRate * Time.deltaTime);
-       
-                   if (health <= 0)
-                   {
-                       health = 0;
-                       m_Animator.SetTrigger("dead");
-                       gameObject.GetComponent<ThirdPersonUserControl>().enabled = false;
-                   }
-                   if(hunger <= 0 || thirst <= 0)
-                   {
-                     health = health - (deathRate * Time.deltaTime);
-                  }
-                   if(hunger <= 0)
-                   {
-                       hunger = 0;
-                   }
-                   if (thirst <= 0)
-                   {
-                       thirst = 0;
-                   }
-	           
 	           if(damaged)
                    {
                        // ... set the colour of the damageImage to the flash colour.
@@ -132,51 +96,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
  
          }
      }
-		   
-
-
-		public void TakeDamage (int amount)
-    {
-        // Set the damaged flag so the screen will flash.
-        damaged = true;
-
-        // Reduce the current health by the damage amount.
-        currentHealth -= amount;
-
-        // Set the health bar's value to the current health.
-        healthSlider.value = currentHealth;
-
-        // Play the hurt sound effect.
-        playerAudio.Play ();
-
-        // If the player has lost all it's health and the death flag hasn't been set yet...
-        if(currentHealth <= 0 && !isDead)
-        {
-            // ... it should die.
-            Death ();
-        }
-    }
-
-
-    		void Death ()
-    {
-        // Set the death flag so this function won't be called again.
-        isDead = true;
-
-        // Turn off any remaining shooting effects.
-        playerShooting.DisableEffects ();
-
-        // Tell the animator that the player is dead.
-        anim.SetTrigger ("Die");
-
-        // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
-        playerAudio.clip = deathClip;
-        playerAudio.Play ();
-
-        // Turn off the movement and shooting scripts.
-        playerMovement.enabled = false;
-        playerShooting.enabled = false;
-    }       
 		
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
