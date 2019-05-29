@@ -10,6 +10,7 @@ public class Worker : MonoBehaviour, IGoap
 	Animator anim;
 	Vector3 previousDestination;
 	Inventory inv;
+	EnemyHealth health;
 	public Inventory stockpile;
 	[SerializeField] float rotationSpeed = 2.0f;
 	[SerializeField] float visDist = 20.0f;
@@ -27,14 +28,14 @@ public class Worker : MonoBehaviour, IGoap
 		agent = this.GetComponent<NavMeshAgent>();
 		anim = this.GetComponent<Animator>();
 		inv = this.GetComponent<Inventory>();		
-		health = this.Getcomponent<Health>();
+		health = this.Getcomponent<EnemyHealth>();
 	}
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
 		worldData.Add(new KeyValuePair<string, object>("damagePlayer", false ));
-		worldData.Add(new KeyValuePair<string, object>("escape", (health.value < 20) ));
+		worldData.Add(new KeyValuePair<string, object>("escape", (health.currentHealth < 20) ));
 		
 		return worldData;
 	}
