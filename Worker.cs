@@ -22,7 +22,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 	void Start()
 	{
 		agent = this.GetComponent<NavMeshAgent>();
-		anim = this.GetComponent<Animator>();
+		anim = this.GetComponentInChildren<Animator>();
 		inv = this.GetComponent<Inventory>();
 		stockpile = GetComponent<Inventory>();
 	}
