@@ -20,7 +20,7 @@ public class EvadeAction : GoapAction {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
 		health = this.GetComponent<EnemyHealth>();
-		healingSpot = gameObject.GetComponent<safeHaven>();
+		healingSpot = gameObject.GetComponent<safeHavenComponent>();
     }
     
     public EvadeAction(){
