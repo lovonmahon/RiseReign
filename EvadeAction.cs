@@ -5,9 +5,9 @@ using UnityEngine;
 public class EvadeAction : GoapAction {
 //attach the safeHaven component to any hiding spot(currently only 1 supported)
 	[SerializeField] float timeBetweenAttack = 1.0f;
-    EnemyHealth health;
-    Animator anim;
-    bool attacked = false;
+    	EnemyHealth health;
+    	Animator anim;
+    	bool isHiding = false;
 	bool avoid = false;
 	Transform healingSpot;
 	//Try caching the animator if performance suffers from initializing it in the perform().
@@ -64,9 +64,9 @@ public class EvadeAction : GoapAction {
 
 	public override bool perform(GameObject agent)	        
         {
-            attacked = true;
-			avoid = true;
-			return true;
-			}        
-	}
+            isHiding = true;
+	    avoid = true;
+	    return true;
+	}        
+	
 }
