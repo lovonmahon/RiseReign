@@ -20,7 +20,7 @@ public class EnemyHealth : MonoBehaviour
     void Awake ()
     {
         // Setting up the references.
-        anim = GetComponent <Animator> ();
+        anim = GetComponentInChildren<Animator> ();
         enemyAudio = GetComponent <AudioSource> ();
         hitParticles = GetComponentInChildren <ParticleSystem> ();
         capsuleCollider = GetComponent <CapsuleCollider> ();
@@ -88,16 +88,16 @@ public class EnemyHealth : MonoBehaviour
     public void StartSinking ()
     {
         // Find and disable the Nav Mesh Agent.
-        GetComponent <NavMeshAgent> ().enabled = false;
+        GetComponent<NavMeshAgent>().enabled = false;
 
         // Find the rigidbody component and make it kinematic (since we use Translate to sink the enemy).
-        GetComponent <Rigidbody> ().isKinematic = true;
+        GetComponent<Rigidbody>().isKinematic = true;
 
         // The enemy should no sink.
         isSinking = true;
 
         // Increase the score by the enemy's score value.
-        ScoreManager.score += scoreValue;
+        //ScoreManager.score += scoreValue;
 
         // After 2 seconds destory the enemy.
         Destroy (gameObject, 2f);
