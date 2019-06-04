@@ -15,7 +15,7 @@ public class AttackAction : GoapAction {
 
 	void Start()
     {
-        anim = gameObject.GetComponent<Animator>();
+        anim = gameObject.GetComponentInChildren<Animator>();
     }
     
     public AttackAction(){
@@ -27,7 +27,11 @@ public class AttackAction : GoapAction {
 
 	void Update()
     {
-        timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
+        	if(target != null)
+		{
+			transform.LootAt(target);//always look at the target
+			timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
+		}
     }
     
     public override void reset() {
