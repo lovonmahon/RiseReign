@@ -9,6 +9,7 @@ public class EvadeAction : GoapAction {
     	Animator anim;
     	bool isHiding = false;
 	bool avoid = false;
+	bool injured = false;
 	float threatDistance = 20.0f;
 	public GameObject healingSpots[];//array of places to hide/heal.
 	int currentHealingSpot = 0;
@@ -45,6 +46,16 @@ public class EvadeAction : GoapAction {
 				Vector3 goToPosition = transform.position + targetCheck;//Calculate flee distance to move away from target threat.
 				agent.SetDestination(goToPosition);//Run!
 			}
+			
+			if(injured)
+			{
+				Vector3 safeDist = healingSpots[currentHealingSpot].transform.position - transform.position;
+				if(safeDist < arrivalAccuracy)
+				{
+					currentHealingSpot = FindClosestSpot();
+				}
+			}
+    
 		}
     }
 	
