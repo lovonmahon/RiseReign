@@ -34,18 +34,23 @@ public class EvadeAction : GoapAction {
     {
         	if(target != null)
 		{
-			transform.LootAt(target);//always look at the target
-			timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
+			//transform.LootAt(target);//always look at the target
+			if(avoid)
+			{
+				Vector3 targetCheck = transform.position - target.position;//check distance to the target
+				Vector3 goToPosition = transform.position + targetCheck;//Calculate flee distance to move away from target threat.
+				agent.SetDestination(goToPosition);//Run!
+			}
 		}
     }
     
     public override void reset() {
-		attacked = false;
+		avoid = false;
 		target = null;
 	}
 
 	public override bool isDone(){
-		return attacked;
+		return avoid;
 	}
 
 	public override bool requiresInRange(){
@@ -54,7 +59,7 @@ public class EvadeAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent){
 		target = GameObject.FindWithTag("Player");
-		//return target != null;
+		return target != null;
 		if(health.currentHealth < 30)
 		{
 			agent.SetDestination(healingSpot.transform.position);
