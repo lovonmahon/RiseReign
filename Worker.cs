@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public abstract class Worker : MonoBehaviour, IGoap
 {
+	[Header("Base AI Class")]//Header is a label to highlight features in inspector.
 	NavMeshAgent agent;
 	Animator anim;
 	Vector3 previousDestination;
