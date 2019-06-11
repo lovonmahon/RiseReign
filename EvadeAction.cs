@@ -93,8 +93,9 @@ public class EvadeAction : GoapAction {
 		return target != null;
 		if(health.currentHealth < 30)
 		{
-			agent.SetDestination(healingSpot.transform.position);
-		}
+			injured = true;
+			agent.SetDestination(healingSpots.transform.position);
+		}		
         return true;
 	}
 
