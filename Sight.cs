@@ -1,4 +1,4 @@
-Ray lastRay;
+//Incomplete script.
 int los = 20;// Line of sight.
 
 //use this for long range chasing or evasion.
