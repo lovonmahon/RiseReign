@@ -25,3 +25,41 @@ void Update()
 {
 	spotTarget();
 }
+
+//the code below to be used as a separate class or place inside existing code to check left, right and forward directions.
+/*
+RaycastHit hit;
+
+float theDist;
+Vector3 forwardDist = transform.position, transform.TransformDirection(Vector3.forward) * 20;
+Vector3 leftDist = transform.position, transform.TransformDirection(Vector3.left) * 20;
+Vector3 rightdDist = transform.position, transform.TransformDirection(Vector3.right) * 20;
+
+if(Physics.Raycast(transform.position, (forwardDist), out hit)
+{
+	if(hit.collider.tag == "player" && health > 30)
+	{
+		theDist = hit.distance;
+	}
+	
+}
+
+if(Physics.Raycast(transform.position, (leftDist), out hit)
+{
+	if(hit.collider.tag == "player" && health > 30)
+	{
+		theDist = hit.distance;
+	}
+}
+
+if(Physics.Raycast(transform.position, (rightdDist), out hit)
+{
+	if(hit.collider.tag == "player" && health > 30)
+	{
+		theDist = hit.distance;
+	}
+}
+
+agent.SetDestination(theDist);
+
+*/
