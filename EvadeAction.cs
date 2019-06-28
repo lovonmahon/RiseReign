@@ -11,7 +11,7 @@ public class EvadeAction : GoapAction {
 	bool avoid = false;
 	bool injured = false;
 	float threatDistance = 20.0f;
-	public GameObject healingSpots[];//array of places to hide/heal.
+	public GameObject[] healingSpots;//array of places to hide/heal.
 	int currentHealingSpot = 0;
 	
 	void Start()
@@ -23,8 +23,8 @@ public class EvadeAction : GoapAction {
     
     public EvadeAction(){
         addPrecondition("runAway", false);
-		addEffect ("hasHealth", (health.currentHealth < 30));
-		//cost = 1.0f;
+	addEffect ("hasHealth", (health.currentHealth < 30));
+	//cost = 1.0f;
         name = "EvadeAction";
 	}
       
