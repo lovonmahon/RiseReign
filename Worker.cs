@@ -57,31 +57,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 	}
 
 
-	public HashSet<KeyValuePair<string,object>> CreateGoalState ()
-	{
-		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
-		goal.Add(new KeyValuePair<string, object>("hasFishingRod", true ));
-		goal.Add(new KeyValuePair<string, object>("hasWheat", true ));
-		goal.Add(new KeyValuePair<string, object>("hasBakes", true ));
-		goal.Add(new KeyValuePair<string, object>("hasBakingFlour", true ));
-		goal.Add(new KeyValuePair<string, object>("hasRawFlour", true ));
-		goal.Add(new KeyValuePair<string, object>("hasMeat", true ));
-		goal.Add(new KeyValuePair<string, object>("hasFish", true ));
-		goal.Add(new KeyValuePair<string, object>("hasHerbs", true ));
-		goal.Add(new KeyValuePair<string, object>("hasBerries", true ));
-		goal.Add(new KeyValuePair<string, object>("hasManure", true ));
-		goal.Add(new KeyValuePair<string, object>("hasHammer", true ));
-		goal.Add(new KeyValuePair<string, object>("hasPlanks", true ));
-		goal.Add(new KeyValuePair<string, object>("hasWeapon", true ));
-		goal.Add(new KeyValuePair<string, object>("hasNails", true ));
-		goal.Add(new KeyValuePair<string, object>("hasCoins", true ));
-		goal.Add(new KeyValuePair<string, object>("hasTrap", true ));
-		goal.Add(new KeyValuePair<string, object>("hasAnimalCaught", true ));
-		goal.Add(new KeyValuePair<string, object>("hasCocoaBalls", true ));
-		goal.Add(new KeyValuePair<string, object>("hasCocoaTea", true ));
-
-		return goal;
-	}
+	public abstract HashSet<KeyValuePair<string,object>> CreateGoalState ();	
 
 
 	public virtual bool MoveAgent(GoapAction nextAction) {
