@@ -5,25 +5,24 @@ using UnityEngine;
 public class EvadeAction : GoapAction {
 //attach the safeHaven component to any hiding spot(currently only 1 supported)
 	[SerializeField] float timeBetweenAttack = 1.0f;
-    	EnemyHealth health;
-    	Animator anim;
-    	bool isHiding = false;
+    testEnemyHealth health;
+    Animator anim;
+    bool isHiding = false;
 	bool avoid = false;
 	bool injured = false;
 	float threatDistance = 20.0f;
-	public GameObject[] healingSpots;//array of places to hide/heal.
-	int currentHealingSpot = 0;
+	HidingSpotComponent targetSpot; // where we chop the firewood
 	
 	void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
-	health = this.GetComponent<EnemyHealth>();
-	healingSpots = gameObject.GetComponent<safeHavenComponent>();	
+	    health = this.GetComponent<testEnemyHealth>();
     }
     
-    public EvadeAction(){
+    public EvadeAction()
+    {
         addPrecondition("runAway", false);
-	addEffect ("hasHealth", (health.currentHealth < 30));
+	    addEffect ("runAway", true );
 	//cost = 1.0f;
         name = "EvadeAction";
 	}
@@ -31,7 +30,7 @@ public class EvadeAction : GoapAction {
     public override void reset() {
 		avoid = false;
 		target = null;
-	    	isHiding = false;
+	    isHiding = false;
 	}
 
 	public override bool isDone(){
@@ -42,24 +41,40 @@ public class EvadeAction : GoapAction {
 		return true;
 	}
 
-	public override bool checkProceduralPrecondition(GameObject agent){
-	    if(healingSpots.Length == 0) return -1//if no spots are found return nothing.
-	    int closest = 0;//Otherwise set the closest spot to the first location in the array.
-	    float lastDist = Vector3.Distance(this.transform.position, healingSpots[0].transform.position);//returns the distance between transform and last waypoint.
-	    for(int i = 1, i < healingSpots.Length, i++)//Iterate over the remaining waypoints in the list to check which is closest to transform.
-	    {
-		  float thisDist = Vector3.Distance(this.transform.position, healingSpots[i].transform.position);
-		  if(lastDist > thisDist && i != currentHealingSpot)
-		  {
-			  closest = i;
-		  }		   
-	    }
-	    return closest; 
+	public override bool checkProceduralPrecondition(GameObject agent)
+    {
+	   // find the nearest chopping block that we can chop our wood at
+		HidingSpotComponent[] spots = (HidingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(HidingSpotComponent));
+		HidingSpotComponent closest = null;
+		float closestDist = 0;
+		
+		foreach (HidingSpotComponent spot in spots) {
+			if (closest == null) {
+				// first one, so choose it for now
+				closest = spot;
+				closestDist = (spot.gameObject.transform.position - agent.transform.position).magnitude;
+			} else {
+				// is this one closer than the last?
+				float dist = (spot.gameObject.transform.position - agent.transform.position).magnitude;
+				if (dist < closestDist) {
+					// we found a closer one, use it
+					closest = spot;
+					closestDist = dist;
+				}
+			}
+		}
+		if (closest == null)
+			return false;
+
+		targetSpot = closest;
+		target = targetSpot.gameObject;
+		
+		return closest != null;
     }
 
 	public override bool perform(GameObject agent)	        
-        {
-            anim.SetTrigger("hidingAnimation");
+    {
+        anim.SetTrigger("hidingAnimation");
 	    isHiding = true;
 	    avoid = true;
 	    return true;
