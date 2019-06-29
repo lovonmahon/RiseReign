@@ -2,97 +2,62 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.AI;
-//To create different worker classes, rename this class to suit.
 
-public class Worker : MonoBehaviour, IGoap
+public abstract class Worker : MonoBehaviour, IGoap
 {
 	NavMeshAgent agent;
-	Animator anim;
 	Vector3 previousDestination;
 	Inventory inv;
-	EnemyHealth health;
-	public Inventory stockpile;
-	[SerializeField] float rotationSpeed = 2.0f;
-	[SerializeField] float visDist = 20.0f;
-	[SerializeField] float visAngle = 30.0f;
-	[SerializeField] float shootDist = 20.0f;
-	[SerializeField] float throwDist = 10.0f;
-	[SerializeField] float meleeDist = 1.0f;
-	[SerializeField] float speed = 1.0f;
-	
-	bool stopAtTarget = false;
-	//String state = "WORK";
+	public Inventory windmill;
 
 	void Start()
 	{
 		agent = this.GetComponent<NavMeshAgent>();
-		anim = this.GetComponentInChildren<Animator>();
-		inv = this.GetComponent<Inventory>();		
-		health = this.Getcomponent<EnemyHealth>();
+		inv = this.GetComponent<Inventory>();
 	}
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		worldData.Add(new KeyValuePair<string, object>("damagePlayer", false ));
-		worldData.Add(new KeyValuePair<string, object>("escape", (health.currentHealth < 20) ));
-		
+		worldData.Add(new KeyValuePair<string, object>("hasStock", (windmill.flourLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasFlour", (inv.flourLevel > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasDelivery", (inv.breadLevel > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("runAway", false ));
+				
 		return worldData;
 	}
 
-	public HashSet<KeyValuePair<string,object>> CreateGoalState ()
-	{
-		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
-		goal.Add(new KeyValuePair<string, object>("doJob", true ));
+
+	public abstract HashSet<KeyValuePair<string,object>> CreateGoalState ();
 	
 
-		return goal;
-	}
 
-
-	public virtual bool MoveAgent(GoapAction nextAction) {
-		float theDistance = Vector3.Distance(transform.position, nextAction.transform.position);	
-		if(theDistance < visDist)
-		{
-			GetComponent<NavMeshAgent>().isStopped = false;
-			GetComponent<NavMeshAgent>().SetDestination(nextAction.transform.position);
-			Vector3 toTarget = agent.steeringTarget - this.transform.position;
-			toTarget.y = 0;
-			Quaternion qRotation = Quaternion.LookRotation(toTarget);
-			transform.rotation = Quaternion.Slerp(transform.rotation, qRotation, 0.005f);
-		}
+	public bool MoveAgent(GoapAction nextAction) {
 		
-		if(theDistance <= meleeDist)
+		//if we don't need to move anywhere
+		if(previousDestination == nextAction.target.transform.position)
 		{
 			nextAction.setInRange(true);
 			return true;
 		}
-		else
-		{
-			return false;
-		}
 		
+		agent.SetDestination(nextAction.target.transform.position);
+		
+		if (agent.hasPath && agent.remainingDistance < 2) {
+			nextAction.setInRange(true);
+			previousDestination = nextAction.target.transform.position;
+			return true;
+		} else
+			return false;
 	}
-	
+
 	void Update()
 	{
-		
 		if(agent.hasPath)
 		{
-			
-         		float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
-         		agent.acceleration = turnAngle * agent.speed;
-			UpdateAnimator();//to match animation to velocity.
-			//code to rotate character to look at player taken from 'line of sight' in penny udemy.
-			if(toTarget.magnitude < visDist && turnAngle < visAngle)
-			{			
-			
-
-			this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
-						  Quaternion.LookRotation(toTarget), 
-						  Time.deltaTime * rotationSpeed);	
-			//this.transform.LookAt(target.position);//look at target
-			}
+			Vector3 toTarget = agent.steeringTarget - this.transform.position;
+         	float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
+         	agent.acceleration = turnAngle * agent.speed;
 		}
 	}
 
@@ -114,13 +79,5 @@ public class Worker : MonoBehaviour, IGoap
 	public void PlanAborted (GoapAction aborter)
 	{
 
-	}
-	
-	private void UpdateAnimator()//taken from Mover.cs script to match animation with velocity.
-	{
-		Vector3 velocity = GetComponent<NavMeshAgent>().velocity;//get velocity of navmeshagent
-		Vector3 localVelocity = transform.InverseTransformDirection(velocity);//takes global and trafers to local velocity
-		float speed = localVelocity.z;//for forward direction.
-		GetComponent<Animator>().SetFloat("forwardSpeed", speed);//forward speed is the parameter on the blendtree for basic movement.  The speed variable is passed in to adjust speed from local velocity.
 	}
 }
