@@ -22,6 +22,7 @@ public class EvadeAction : GoapAction {
     public EvadeAction()
     {
         addPrecondition("runAway", false);
+        addPrecondition("hasHealth", false);	    
 	    addEffect ("runAway", true );
 	//cost = 1.0f;
         name = "EvadeAction";
