@@ -47,6 +47,9 @@ public abstract class Worker : MonoBehaviour, IGoap
 		agent.SetDestination(nextAction.target.transform.position);
 		if(!_interrupt)
 		{
+			//Abort the previous plan.
+			PlanAborted (GoapAction aborter);
+			//Pursue new course.
 			agent.SetDestination( goalDestination );
 		}	
 		
