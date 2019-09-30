@@ -10,7 +10,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 	Inventory inv;
 	public Inventory windmill;
 	
-	public Vector3 goalDestination;
+	//public Vector3 goalDestination;
 	public bool _interrupt = false;
 
 	void Start()
@@ -45,13 +45,13 @@ public abstract class Worker : MonoBehaviour, IGoap
 		}
 		
 		agent.SetDestination(nextAction.target.transform.position);
-		if(!_interrupt)
+		/*if(!_interrupt)
 		{
 			//Abort the previous plan.
 			PlanAborted (GoapAction aborter);
 			//Pursue new course.
 			agent.SetDestination( goalDestination );
-		}	
+		}*/	
 		
 		if (agent.hasPath && agent.remainingDistance < 2) {
 			nextAction.setInRange(true);
