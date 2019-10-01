@@ -2,29 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SeeAction : GoapAction {
+public class Sight : MonoBehaviour {
 
 		//Try caching the animator if performance suffers from initializing it in the perform().
 	/*void Awake(){
 		anim = GameObject.GetComponent<Animator>();
 	}*/
 
+public Ray l_ray;
+public Ray r_ray;
+public Ray f_ray;
 	
-  
-  
-  void Start()
+public float goatDestination;
+	
+    void Start()
     {
-        anim = gameObject.GetComponentInChildren<Animator>();
+        
     }
     
-    public SeeAction(){
-        addPrecondition("damagePlayer", false);
-		addEffect ("doJob", true);
-		//cost = 1.0f;
-        name = "SeeAction";
-	}
-
-	void Update()
+  void Update()
     {
         	RaycastHit hit;
 
@@ -57,44 +53,4 @@ if(Physics.Raycast(transform.position, (rightdDist), out hit)
 	}
 }
 
-agent.SetDestination(theDist);
 
-		{
-			transform.LootAt(target);//always look at the target
-			timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
-		}
-    }
-    
-    public override void reset() {
-		attacked = false;
-		target = null;
-	}
-
-	public override bool isDone(){
-		return attacked;
-	}
-
-	public override bool requiresInRange(){
-		return true;
-	}
-
-	public override bool checkProceduralPrecondition(GameObject agent){
-		target = GameObject.FindWithTag("Player");
-		//return target != null;
-        return true;
-	}
-
-	public override bool perform(GameObject agent){
-		//Alligator gator = agent.GetComponent<Alligator> ();
-		//gator.stamina -= (500 - cost);
-		//Throttle attack
-        if(timeSinceLastAttack > timeBetweenAttack)
-        {
-            anim.SetTrigger("attack");
-            timeSinceLastAttack = 0;//reset attack time.
-        }        
-		attacked = true;
-		return attacked;
-        return true;
-	}
-}
