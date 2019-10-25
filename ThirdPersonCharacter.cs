@@ -39,6 +39,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 	public float flashSpeed = 5f;                               // The speed the damageImage will fade at.
     	public Color flashColour = new Color(1f, 0f, 0f, 0.1f);     // The colour the damageImage is set to, to flash.
 	AudioSource playerAudio;                                    // Reference to the AudioSource component.
+	
+	public float health = 100;
+        public float hunger = 100;
+        public float thirst = 100;
+
+        public float deathRate;
+        public float thirstRate;
+        public float hungerRate;
+
+        public Slider Hbar;
+        public Slider Tbar;
+        public Slider healthBar;
 
 		void Start()
 		{
@@ -56,7 +68,8 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
                void Update()
                {
-	           if(damaged)
+	           Vitals();
+		   if(damaged)
                    {
                        // ... set the colour of the damageImage to the flash colour.
                        damageImage.color = flashColour;
@@ -96,6 +109,36 @@ namespace UnityStandardAssets.Characters.ThirdPerson
  
          }
      }
+		
+		public void Vitals()
+		{
+			healthBar.value = health;
+            		Hbar.value = hunger;
+            		Tbar.value = thirst;
+
+            		hunger = hunger - (hungerRate * Time.deltaTime);
+            		thirst = thirst - (thirstRate * Time.deltaTime);
+
+            		if (health <= 0)
+            		{
+                		health = 0;
+                		m_Animator.SetTrigger("dead");
+                		gameObject.GetComponent<ThirdPersonUserControl>().enabled = false;
+            		}
+            		if(hunger <= 0 || thirst <= 0)
+            		{
+              		health = health - (deathRate * Time.deltaTime);
+           		}
+            		if(hunger <= 0)
+            		{
+                		hunger = 0;
+            		}
+            		if (thirst <= 0)
+            		{
+                		thirst = 0;
+			}
+		
+		}
 		
 		public void Move(Vector3 move, bool crouch, bool jump)
 		{
