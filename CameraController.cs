@@ -50,7 +50,8 @@ namespace RiseReign
 
         void LateUpdate()
         {
-            CollisionCheck( target.position - transform.forward * distFromTarget );
+            CollisionCheck(target.position - transform.forward * distFromTarget);
+            WallCheck();
 
             if (!pitchLock)
             {
@@ -65,14 +66,14 @@ namespace RiseReign
                 pitch = pitchMinMax.y;
                 currentRotation = Vector3.Lerp(currentRotation, new Vector3(pitch, yaw), rotationSmoothTime * Time.deltaTime);
             }
-            
+
             transform.eulerAngles = currentRotation;
 
             Vector3 e = transform.eulerAngles;
             e.x = 0;//Prevent character from rotating towards the ground.
 
             target.elerAngles = e;
-            
+
         }
 
         private void CollisionCheck(Vector3 retPoint)
@@ -103,32 +104,53 @@ namespace RiseReign
 
         private void TransparancyCheck()
         {
-            if( changeTransparency)
+            if (changeTransparency)
             {
-                if(Vector3.Distance(transform.position, target.position) <= closestDistanceToPlayer)
+                if (Vector3.Distance(transform.position, target.position) <= closestDistanceToPlayer)
                 {
                     Color temp = targetRenderer.sharedMaterial.color;
-                    temp.a = Mathf.lerp (temp.a, 0.2f, moveSpeed * Time.deltaTime); //Between 0.1-1 for color change
+                    temp.a = Mathf.lerp(temp.a, 0.2f, moveSpeed * Time.deltaTime); //Between 0.1-1 for color change
 
                     targetRenderer.sharedMaterial.color = temp;//only does this for one material.  Create a loop to iterate multiple materials
 
                 }
                 else
                 {
-                    if(targetRenderer.sharedMaterial.color.a <= 0.99f)
+                    if (targetRenderer.sharedMaterial.color.a <= 0.99f)
                     {
                         Color temp = targetRenderer.sharedMaterial.color;
-                        temp.a = Mathf.lerp (temp.a, 1f, moveSpeed * Time.deltaTime);
+                        temp.a = Mathf.lerp(temp.a, 1f, moveSpeed * Time.deltaTime);
 
                         targetRenderer.sharedMaterial.color = temp;
                     }
                 }
+            }
         }
 
         private void FullTransparency()
         {
+            if (changeTransparency)
+            {
+                Color temp = targetRenderer.sharedMaterial.color;
+                temp.a = Mathf.lerp(temp.a, 1f, moveSpeed * Time.deltaTime);
 
+                targetRenderer.sharedMaterial.color = temp;
+            }
+        }
+
+        private void WallCheck()
+        {
+            Ray ray = new Ray(target.position, -target.forward);
+            RaycastHit hit;
+
+            if (Physics.SphereCast(ray, 0.5f, out hit, 0.7f, collisionMask))
+            {
+                pitchLock = true;
+            }
+            else
+            {
+                pitchLock = false;
+            }
         }
     }
 }
-
