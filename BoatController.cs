@@ -1,32 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace RiseReign
 {
-    //Attach to boat model.
-    public class BoatController : Monobehaviour
+    
+    public GameObject vehicle;
+    public GameObject vehicleCam;
+    public GameObject player;
+    public GameObject playerStartPos;
+    
+    public class SwitchControl : MonoBehaviour
     {
-        [SerializeField]
-        float turnSpeed = 1000f;
-        float acceleration = 10f;
-
-        Rigidbody rb;
-
-        void Start()
-        {
-            rb = gameObject.GetComponent<RigidBody>();
-        }
+        void Start(){}
 
         void Update()
         {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
+            //Vehicle mode
+            if(Input.GetButton("mount"))
+            {
+                vehicle.GetComponent<RigidBody>().isKinematic = false;
+                vehicle.GetComponent<BoatController>().enabled = true;
+                vehicleCam.SetActive(true);
 
-            rbody.addTorque(0f, h * turnSpeed * Time.deltaTime, 0f); //turning
-            rbody.AddForce( transform.forward * v * acceleration * Time.deltaTime);//Moving forward
+                //player.SetActive(false); this completely hides player
 
-        }
-        
+                player.GetComponent<ThirsPersonController>().enabled(false);//this only disables player control but character still visible
+            }
+
+            if(Input.GetButton("dismount"))
+            {
+                vehicle.GetComponent<RigidBody>().isKinematic = true;
+                vehicle.GetComponent<BoatController>().enabled = false;
+                vehicleCam.SetActive(false);
+
+                //player.SetActive(true);
+
+                player.GetComponent<ThirsPersonController>().enabled(true);
+            }
     }
 }
+}
+
