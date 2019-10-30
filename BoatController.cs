@@ -3,14 +3,15 @@ using UnityEngine;
 
 namespace RiseReign
 {
-    
-    public GameObject vehicle;
-    public GameObject vehicleCam;
-    public GameObject player;
-    public GameObject playerStartPos;
-    
+           
     public class SwitchControl : MonoBehaviour
     {
+        public GameObject vehicle;
+        public GameObject vehicleCam;
+        public GameObject player;
+        public GameObject playerStartPos;
+        
+        
         void Start(){}
 
         void Update()
