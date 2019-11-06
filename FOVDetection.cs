@@ -90,7 +90,7 @@ namespace RiseReign
     
         void Update()
         {
-            isInFOV = inFOV( transform, player, maxAngle, maxRadius)
+            isInFOV = inFOV( transform, player, maxAngle, maxRadius);
         }
     }
 }
