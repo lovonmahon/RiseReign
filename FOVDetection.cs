@@ -14,7 +14,7 @@ namespace RiseReign
     	public float maxAngle;
     	public float maxRadius;
     
-        private bool isInFOV = false;
+        public bool isInFOV = false;
     	
     	#endregion
     	
