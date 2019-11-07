@@ -6,10 +6,7 @@ public class CanSeeAction : GoapAction {
 
 	//[SerializeField] float timeBetweenAttack = 1.0f;
 	FOVDetection fov;    
-	//Try caching the animator if performance suffers from initializing it in the perform().
-	/*void Awake(){
-		anim = GameObject.GetComponent<Animator>();
-	}*/
+	bool m_sawPlayer = false;
 
 	void Start()
     {
@@ -18,9 +15,8 @@ public class CanSeeAction : GoapAction {
     }
     
     public CanSeeAction(){
-        addPrecondition("canSeePlayer", true);
-		addEffect ("doJob", true);
-		//cost = 1.0f;
+        addPrecondition("canSeePlayer", false);
+	addEffect ("doJob", true);
         name = "CanSeeAction";
 	}
 
@@ -34,22 +30,27 @@ public class CanSeeAction : GoapAction {
 	}
 
 	public override bool isDone(){
-		return sawPlayer;
+		return m_sawPlayer;
 	}
 
 	public override bool requiresInRange(){
 		return true;
 	}
 
-	public override bool checkProceduralPrecondition(GameObject agent){
+	public override bool checkProceduralPrecondition(GameObject agent)
+	{
 		target = GameObject.FindWithTag("Player");
-		fov.isInFOV = true;
-        return true;
+		if ( fov.isInFOV )
+		{	
+        	    return true;
+		}
+		return false;
 	}
 
-	public override bool perform(GameObject agent){
-		sawPlayer = true;
-		return sawPlayer;
-        return true;
+	public override bool perform(GameObject agent)
+	{
+	    m_sawPlayer = true;
+	    //return m_sawPlayer;
+            return true;
 	}
 }
