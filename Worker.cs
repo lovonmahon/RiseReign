@@ -51,7 +51,8 @@ public abstract class Worker : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
 		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));*/
 		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
-		worldData.Add(new KeyValuePair<string, object>("runAway", false ));
+		worldData.Add(new KeyValuePair<string, object>("runAway", false )); 
+		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
 		
 		
 		return worldData;
