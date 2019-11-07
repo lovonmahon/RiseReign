@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class EvadeAction : GoapAction {
 //attach the safeHaven component to any hiding spot(currently only 1 supported)
-	[SerializeField] float timeBetweenAttack = 1.0f;
+    [SerializeField] float timeBetweenAttack = 1.0f;
     testEnemyHealth health;
     Animator anim;
     bool isHiding = false;
-	bool avoid = false;
-	bool injured = false;
-	float threatDistance = 20.0f;
-	HidingSpotComponent targetSpot; // where we chop the firewood
+    bool avoid = false;
+    bool injured = false;
+    float threatDistance = 20.0f;
+    HidingSpotComponent targetSpot; // where we chop the firewood
 	
 	void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
-	    health = this.GetComponent<testEnemyHealth>();
+	health = this.GetComponent<testEnemyHealth>();
     }
     
     public EvadeAction()
@@ -44,7 +44,7 @@ public class EvadeAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent)
     {
-	   // find the nearest chopping block that we can chop our wood at
+	   // find the nearest hiding spot 
 		HidingSpotComponent[] spots = (HidingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(HidingSpotComponent));
 		HidingSpotComponent closest = null;
 		float closestDist = 0;
