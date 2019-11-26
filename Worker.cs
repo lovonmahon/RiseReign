@@ -133,8 +133,8 @@ public abstract class Worker : MonoBehaviour, IGoap
 	public void PlanAborted (GoapAction aborter)
 	{
 		GetComponent<GoapAgent>().findDataProvider().actionsFinished();
-        	//aborter.ResetGA();
-        	aborter.ResetAction();
+        	//aborter.reset();
+        	aborter.reset();
 	}
 	
 	private void UpdateAnimator()//taken from Mover.cs script to match animation with velocity.
