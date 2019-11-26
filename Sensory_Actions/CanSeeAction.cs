@@ -39,11 +39,14 @@ public class CanSeeAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent)
 	{
-		target = GameObject.FindWithTag("Player");
-		if ( fov.isInFOV )
-		{	
-        	    return true;
-		}
+		if(GetComponent<Signt>().canSeePlayer == true)
+		{
+			target = GameObject.FindWithTag("Player");
+			if (target != null)
+			{
+				return true;
+			}
+		}	
 		return false;
 	}
 
