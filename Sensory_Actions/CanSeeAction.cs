@@ -5,7 +5,7 @@ using UnityEngine;
 public class CanSeeAction : GoapAction {
 
 	//[SerializeField] float timeBetweenAttack = 1.0f;
-	FOVDetection fov;    
+	   
 	bool m_sawPlayer = false;
 
 	void Start()
