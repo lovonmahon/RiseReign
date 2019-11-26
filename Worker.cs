@@ -73,11 +73,13 @@ public abstract class Worker : MonoBehaviour, IGoap
 		
 		agent.SetDestination(nextAction.target.transform.position);
 		
-		if (agent.hasPath && agent.remainingDistance <= meleeDist) {
+		if (agent.hasPath && !agent.pathPending && agent.remainingDistance <= meleeDist)
+		 {
 			nextAction.setInRange(true);
 			previousDestination = nextAction.target.transform.position;
 			return true;
-		} else
+		} 
+		else
 			return false;
 	}
 
