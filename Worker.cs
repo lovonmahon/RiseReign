@@ -71,6 +71,16 @@ public abstract class Worker : MonoBehaviour, IGoap
 			return true;
 		}
 		
+		/*if (m_interrupt)
+        	{
+            		GetComponent<GoapAgent>().findDataProvider().planAborted(nextAction);
+
+            		AbortPlan(nextAction);
+            		m_interrupt = false;
+
+            		return true;
+        	}*/
+		
 		agent.SetDestination(nextAction.target.transform.position);
 		
 		if (agent.hasPath && !agent.pathPending && agent.remainingDistance <= meleeDist)
@@ -122,7 +132,9 @@ public abstract class Worker : MonoBehaviour, IGoap
 
 	public void PlanAborted (GoapAction aborter)
 	{
-
+		GetComponent<GoapAgent>().findDataProvider().actionsFinished();
+        	//aborter.ResetGA();
+        	aborter.ResetAction();
 	}
 	
 	private void UpdateAnimator()//taken from Mover.cs script to match animation with velocity.
