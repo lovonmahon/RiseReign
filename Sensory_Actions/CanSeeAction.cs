@@ -10,14 +10,13 @@ public class CanSeeAction : GoapAction {
 
 	void Start()
     {
-        anim = gameObject.GetComponentInChildren<Animator>();
-        fov = this.GetComponent<FOVDetection>();
+        anim = gameObject.GetComponentInChildren<Animator>();        
     }
     
     public CanSeeAction(){
         addPrecondition("canSeePlayer", false);
 	addEffect ("doJob", true);
-        name = "CanSeeAction";
+        name = "Can see the player";
 	}
 
 	void Update()
@@ -39,7 +38,7 @@ public class CanSeeAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent)
 	{
-		if(GetComponent<Signt>().canSeePlayer == true)
+		if(GetComponent<Signt>().m_canSeePlayer == true)
 		{
 			target = GameObject.FindWithTag("Player");
 			if (target != null)
