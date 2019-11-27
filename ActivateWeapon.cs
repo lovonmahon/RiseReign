@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace RiseReign
 {
-	public class ActivateWeapon
+	public class ActivateWeapon : MonoBehaviour
 	{
 		private Animator m_animator;
 		public GameObject m_weapon;
