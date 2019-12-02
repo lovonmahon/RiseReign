@@ -7,7 +7,8 @@ public class AttackAction : GoapAction {
 
     public Animator anim;
     bool attacked = false;
-    Sight sight;	
+    Sight sight;
+    NavmeshAgent agent;
 	//Try caching the animator if performance suffers from initializing it in the perform().
 	/*void Awake(){
 		anim = GameObject.GetComponent<Animator>();
@@ -17,6 +18,7 @@ public class AttackAction : GoapAction {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
 	sight = gameObject.GetComponent<Sight>();
+	agent = this.GetComponent<NAvmeshAgent>();
     }
     
     public AttackAction(){
@@ -63,6 +65,10 @@ public class AttackAction : GoapAction {
 
 	public override bool perform(GameObject agent){
 		anim.SetTrigger("attack");
+		if ( target.isBlocking )
+		{
+			transform.RotateAround( sight.dirToTarget, Vector3.up, 90f * Time.deltaTime );//points to the targets vector 3 location to rotate around.
+		}	
 		//Alligator gator = agent.GetComponent<Alligator> ();
 		//gator.stamina -= (500 - cost);
               
