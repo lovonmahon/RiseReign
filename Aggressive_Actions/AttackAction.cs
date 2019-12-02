@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class AttackAction : GoapAction {
 
-	[SerializeField] float timeBetweenAttack = 1.0f;
-    float timeSinceLastAttack = 0;
-	
+
     public Animator anim;
     bool attacked = false;
     Sight sight;	
@@ -64,16 +62,11 @@ public class AttackAction : GoapAction {
 	}
 
 	public override bool perform(GameObject agent){
+		anim.SetTrigger("attack");
 		//Alligator gator = agent.GetComponent<Alligator> ();
 		//gator.stamina -= (500 - cost);
-		//Throttle attack
-        if(timeSinceLastAttack > timeBetweenAttack)
-        {
-            anim.SetTrigger("attack");
-            timeSinceLastAttack = 0;//reset attack time.
-        }        
+              
 		attacked = true;
-		return attacked;
-        return true;
+         	return true;
 	}
 }
