@@ -49,8 +49,15 @@ public class AttackAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent){
 		target = GameObject.FindWithTag("Player");
+		if( GetComponent<Sight>.m_canSeePlayer == true)
+		{
+			if( target != null )
+			{
+				return true;
+			}	
+		}
 		//return target != null;
-        return true;
+        	return false;
 	}
 
 	public override bool perform(GameObject agent){
