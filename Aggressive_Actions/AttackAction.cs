@@ -6,8 +6,10 @@ public class AttackAction : GoapAction {
 
 	[SerializeField] float timeBetweenAttack = 1.0f;
     float timeSinceLastAttack = 0;
+	
     public Animator anim;
     bool attacked = false;
+    Sight sight;	
 	//Try caching the animator if performance suffers from initializing it in the perform().
 	/*void Awake(){
 		anim = GameObject.GetComponent<Animator>();
@@ -16,6 +18,7 @@ public class AttackAction : GoapAction {
 	void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
+	sight = gameObject.GetComponent<Sight>();
     }
     
     public AttackAction(){
@@ -49,7 +52,7 @@ public class AttackAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent){
 		target = GameObject.FindWithTag("Player");
-		if( GetComponent<Sight>.m_canSeePlayer == true)
+		if( sight.m_canSeePlayer == true)
 		{
 			if( target != null )
 			{
