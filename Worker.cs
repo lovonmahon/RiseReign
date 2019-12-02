@@ -133,7 +133,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 	public void PlanAborted (GoapAction aborter)
 	{
 		GetComponent<GoapAgent>().findDataProvider().actionsFinished();
-        	//aborter.reset();
+        	aborter.doReset();
         	aborter.reset();
 	}
 	
