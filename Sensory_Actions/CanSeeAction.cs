@@ -14,8 +14,7 @@ public class CanSeeAction : GoapAction {
     }
     
     public CanSeeAction(){
-        addPrecondition("canSeePlayer", false);
-	addEffect ("doJob", true);
+	addEffect ("canSeePlayer", true);
         name = "Can see the player";
 	}
 
@@ -53,6 +52,7 @@ public class CanSeeAction : GoapAction {
 	{
 	    m_sawPlayer = true;
 	    //return m_sawPlayer;
+	    Debug.Log("Ah ketch eem!")	
             return true;
 	}
 }
