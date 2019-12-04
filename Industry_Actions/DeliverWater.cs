@@ -10,7 +10,7 @@ public class DeliverWater : GoapAction {
 	float startTime = 0;
 	public float workDuration = 5; // seconds
 	
-	public DeliverBread () {
+	public DeliverWater () {
 		addPrecondition ("hasDeliveryWater", true); 
 		addEffect ("doJob", true);
 		name = "Deliver water";
