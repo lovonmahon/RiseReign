@@ -35,10 +35,10 @@ namespace RiseReign {
 		{
 			StartCoroutine( "FindTargets", 0.2f);//find targets every 0.2 seconds.
 		}
-
-		private IEnumerator Findtargets(float delay)
+		/// <param name="delay">How long to delay.</param>
+		private IEnumerator FindTargets(float delay)
 		{
-			while( true)
+            while( true)
 			{
 				yield return new WaitForSeconds( delay);
 				FindVisibleTargets();//Method to loop through targets
@@ -69,7 +69,7 @@ namespace RiseReign {
 					//Calculate distance to target now.
 
 					float distanceToTarget = Vector3.Distance( transform.position, target.position);
-					if( !Physics.RayCast( transform.position, dirToTarget, distanceToTarget, m_obstacleMask))//Is the target in range and not an obstacle?
+					if( !Physics.Raycast( transform.position, dirToTarget, distanceToTarget, m_obstacleMask))//Is the target in range and not an obstacle?
 					{
 						//Add the target to list if it wasn't added already.
 						m_visibleTargets.Add(target);
@@ -77,7 +77,8 @@ namespace RiseReign {
 						if( target.CompareTag("Player"))//if target is the player..
 						{
 							m_canSeePlayer = true;
-							GetComponent<Worker>.m_interrupt = true;//Interrupt current action.
+                            Debug.Log("Player spotted!");
+							//this.GetComponent<Worker>.m_interrupt = true;//Interrupt current action.
 							m_playerLastKnownPosition = target;
 							m_investigate = true;
 						}
@@ -89,7 +90,7 @@ namespace RiseReign {
 			{
 				if( m_investigate)
 				{
-					GetComponent<Worker>.m_interrupt = true;
+					//this.GetComponent<Worker>.m_interrupt = true;
 					m_investigate = false;
 					m_canSeePlayer = false;
 					//m_alertNoise = false; Implement noise later.
@@ -98,6 +99,20 @@ namespace RiseReign {
 				}
 				
 			}
+		}
+		/// <summary>
+		/// Gets a direction vector from an angle in degrees;
+		/// </summary>
+		/// <param name="a_fAngleDegrees">The angle to turn into direction.</param>
+		/// <param name="a_bGlobalAngle">if set to <c>true</c> [a b global angle].</param>
+		/// <returns></returns>
+		public Vector3 DirectionFromAngle(float a_fAngleDegrees, bool a_bGlobalAngle)
+		{
+			if (!a_bGlobalAngle)
+			{
+				a_fAngleDegrees += transform.eulerAngles.y;
+			}
+			return new Vector3(Mathf.Sin(a_fAngleDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(a_fAngleDegrees * Mathf.Deg2Rad));
 		}
 	}
 }		
