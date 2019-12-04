@@ -22,10 +22,8 @@ public class AttackAction : GoapAction {
     }
     
     public AttackAction(){
-        addPrecondition("damagePlayer", false);
-		addEffect ("doJob", true);
-		//cost = 1.0f;
-        name = "AttackAction";
+        addEffect ("damagePlayer", true);
+        name = "Attack the player";
 	}
 
 	void Update()
@@ -33,7 +31,7 @@ public class AttackAction : GoapAction {
         	if(target != null)
 		{
 			transform.LootAt(target);//always look at the target
-			timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
+			//timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
 		}
     }
     
