@@ -31,27 +31,10 @@ public abstract class Animals : MonoBehaviour, IGoap
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		/*worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakes", (inv.Bakes > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.Flour > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasRawFlour", (inv.RawFlour > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasMeat", (inv.Meat < 2) ));
-		worldData.Add(new KeyValuePair<string, object>("hasFish", (inv.Fish > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHerbs", (inv.Herbs > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBerries", (inv.Berries > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasManure", (inv.Manure > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHammer", (inv.Hammer > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasPlanks", (inv.Planks > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWeapon", (inv.Weapon > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasNails", (inv.Nails > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCoins", (inv.Coins > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.Trap > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.CaughtAnimal > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));*/
-		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
-		worldData.Add(new KeyValuePair<string, object>("runAway", false )); 
+		/*worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));*/
+		worldData.Add(new KeyValuePair<string, object>("hasFood", (inv.Bakes > 4) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 90) ));
+		worldData.Add(new KeyValuePair<string, object>("hide", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
 		
 		
@@ -98,8 +81,8 @@ public abstract class Animals : MonoBehaviour, IGoap
 		if(agent.hasPath)
 		{
 			Vector3 toTarget = agent.steeringTarget - this.transform.position;
-         		float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
-         		agent.acceleration = turnAngle * agent.speed;
+         	float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
+         	agent.acceleration = turnAngle * agent.speed;
 			UpdateAnimator();//to match animation to velocity.
 			//code to rotate character to look at player taken from 'line of sight' in penny udemy.
 			if(toTarget.magnitude < visDist && turnAngle < visAngle)
