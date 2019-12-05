@@ -31,7 +31,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		/*worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
+		worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
 		worldData.Add(new KeyValuePair<string, object>("hasBakes", (inv.Bakes > 4) ));
 		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.Flour > 1) ));
@@ -49,7 +49,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.Trap > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.CaughtAnimal > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));*/
+		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
 		worldData.Add(new KeyValuePair<string, object>("runAway", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
@@ -98,9 +98,10 @@ public abstract class Worker : MonoBehaviour, IGoap
 		if(agent.hasPath)
 		{
 			Vector3 toTarget = agent.steeringTarget - this.transform.position;
-         		float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
-         		agent.acceleration = turnAngle * agent.speed;
+         	float turnAngle = Vector3.Angle(this.transform.forward,toTarget);
+         	agent.acceleration = turnAngle * agent.speed;
 			UpdateAnimator();//to match animation to velocity.
+
 			//code to rotate character to look at player taken from 'line of sight' in penny udemy.
 			if(toTarget.magnitude < visDist && turnAngle < visAngle)
 			{			
