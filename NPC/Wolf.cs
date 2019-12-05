@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Wolf : Enemy {
+public class Wolf : Enemy { /* CREATE A NEW CANINE BASE CLASS TO INHERIT FROM INSTEAD - TO DO */
 
 	// Use this for initialization
 	void Start () {
