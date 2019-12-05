@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Shark : Animals
 {
 	/**
-	 * The Shark's main goal is whatever Alligators do 
+	 * The Shark's main goal is whatever Sharks do 
 	 */
 	public override HashSet<KeyValuePair<string,object>> CreateGoalState () {
 		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
