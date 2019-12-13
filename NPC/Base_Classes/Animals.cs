@@ -31,11 +31,13 @@ public abstract class Animals : MonoBehaviour, IGoap
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		/*worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));*/
-		worldData.Add(new KeyValuePair<string, object>("hasFood", (inv.Bakes > 4) ));
 		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 90) ));
-		worldData.Add(new KeyValuePair<string, object>("hide", false )); 
+		worldData.Add(new KeyValuePair<string, object>("flee", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
+		worldData.Add(new KeyValuePair<string, object>("hunt", false ));
+		worldData.Add(new KeyValuePair<string, object>("rest", false ));
+		worldData.Add(new KeyValuePair<string, object>("fight", false ));
+		worldData.Add(new KeyValuePair<string, object>("investigate", false ));
 		
 		
 		return worldData;
