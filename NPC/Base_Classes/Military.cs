@@ -30,29 +30,18 @@ public abstract class Military : MonoBehaviour, IGoap
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
-		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();
-		/*worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakes", (inv.Bakes > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBakingFlour", (inv.Flour > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasRawFlour", (inv.RawFlour > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasMeat", (inv.Meat < 2) ));
-		worldData.Add(new KeyValuePair<string, object>("hasFish", (inv.Fish > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHerbs", (inv.Herbs > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasBerries", (inv.Berries > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasManure", (inv.Manure > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasHammer", (inv.Hammer > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasPlanks", (inv.Planks > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasWeapon", (inv.Weapon > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasNails", (inv.Nails > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCoins", (inv.Coins > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasTrap", (inv.Trap > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasAnimalCaught", (inv.CaughtAnimal > 1) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaBallsocoaBalls", (inv.cocoaBalls > 4) ));
-		worldData.Add(new KeyValuePair<string, object>("hasCocoaTea", (inv.CocoaTea > 1) ));*/
+		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();	
 		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
-		worldData.Add(new KeyValuePair<string, object>("runAway", false )); 
+		worldData.Add(new KeyValuePair<string, object>("flee", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
+		worldData.Add(new KeyValuePair<string, object>("rest", false ));
+		worldData.Add(new KeyValuePair<string, object>("fight", false ));
+		worldData.Add(new KeyValuePair<string, object>("embark", false ));
+		worldData.Add(new KeyValuePair<string, object>("disembark", false ));
+		worldData.Add(new KeyValuePair<string, object>("investigate", false ));
+		worldData.Add(new KeyValuePair<string, object>("escort", false ));
+		worldData.Add(new KeyValuePair<string, object>("steal", false ));
+		worldData.Add(new KeyValuePair<string, object>("patrol", false ));
 		
 		
 		return worldData;
