@@ -32,7 +32,8 @@ public class CanSeeAction : GoapAction {
 	}
 
 	public override bool requiresInRange(){
-		return true;
+		return false; //the sight script will determine sight range and pass the canSee variable to
+		// the checkProceduralPrecondition().
 	}
 
 	public override bool checkProceduralPrecondition(GameObject agent)
