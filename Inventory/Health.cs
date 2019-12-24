@@ -6,7 +6,7 @@ namespace RiseReign{
 	
 	public class Health : MonoBehaviour
 	{
-		public int amount = 100;
+		public int helt = 100;
 
 		void Start()
 		{
@@ -16,6 +16,11 @@ namespace RiseReign{
 		void Update()
 		{
 			//
+		}
+
+		public void TakeDamage( int damage )
+		{
+			helt -= damage; //loses damage amount from helt.
 		}
 	}
 }
