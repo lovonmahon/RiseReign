@@ -10,8 +10,8 @@ public abstract class Military : MonoBehaviour, IGoap
 	NavMeshAgent agent;
 	Animator anim;
 	Vector3 previousDestination;
-	Inventory inv;
-	public Inventory stockpile;
+	//Inventory inv;
+	//public Inventory stockpile;
 	[SerializeField] float rotationSpeed = 2.0f;
 	[SerializeField] float visDist = 20.0f;
 	[SerializeField] float visAngle = 30.0f;
@@ -24,14 +24,14 @@ public abstract class Military : MonoBehaviour, IGoap
 	{
 		agent = this.GetComponent<NavMeshAgent>();
 		anim = this.GetComponentInChildren<Animator>();
-		inv = this.GetComponent<Inventory>();
-		stockpile = GetComponent<Inventory>();
+		//inv = this.GetComponent<Inventory>();
+		//stockpile = GetComponent<Inventory>();
 	}
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();	
-		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
+		//worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
 		worldData.Add(new KeyValuePair<string, object>("flee", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
 		worldData.Add(new KeyValuePair<string, object>("rest", false ));
@@ -44,11 +44,19 @@ public abstract class Military : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("patrol", false ));
 		
 		
+		
 		return worldData;
 	}
 
 
-	public abstract HashSet<KeyValuePair<string,object>> CreateGoalState ();	
+	public HashSet<KeyValuePair<string,object>> CreateGoalState ()
+	{
+		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
+		//goal.Add(new KeyValuePair<string, object>("doJob", true ));
+		goal.Add(new KeyValuePair<string, object>("fight", true ));
+
+		return goal;
+	}
 
 
 	public virtual bool MoveAgent(GoapAction nextAction) {
@@ -93,9 +101,9 @@ public abstract class Military : MonoBehaviour, IGoap
 			//code to rotate character to look at player taken from 'line of sight' in penny udemy.
 			if(toTarget.magnitude < visDist && turnAngle < visAngle)
 			{			
-			toTarget.y = 0;
+				toTarget.y = 0;
 
-			this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
+				this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
 						  Quaternion.LookRotation(toTarget), 
 						  Time.deltaTime * rotationSpeed);		
 
@@ -121,9 +129,9 @@ public abstract class Military : MonoBehaviour, IGoap
 
 	public void PlanAborted (GoapAction aborter)
 	{
-		GetComponent<GoapAgent>().findDataProvider().actionsFinished();
+		/*GetComponent<GoapAgent>().findDataProvider().actionsFinished();
         	aborter.doReset();
-        	aborter.reset();
+        	aborter.reset();*/ //Inspired by guard vs spy - deal with later.
 	}
 	
 	private void UpdateAnimator()//taken from Mover.cs script to match animation with velocity.
