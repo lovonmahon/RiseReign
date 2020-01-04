@@ -1,21 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RiseReign;
 
 public class CanSeeAction : GoapAction {
 
 	//[SerializeField] float timeBetweenAttack = 1.0f;
 	   
 	bool m_sawPlayer = false;
+    Animator anim;
+    Sight sight;
 
 	void Start()
     {
-        anim = gameObject.GetComponentInChildren<Animator>();        
+        anim = gameObject.GetComponentInChildren<Animator>();
+        sight = gameObject.GetComponent<Sight>();        
     }
     
     public CanSeeAction(){
-	addEffect ("canSeePlayer", true);
-        name = "Can see the player";
+		addPrecondition("canSeePlayer", false);
+		addEffect ("canSeePlayer", true);
+		//addEffect ("doJob", true);
+    	name = "Can see the player";
 	}
 
 	void Update()
@@ -32,17 +38,17 @@ public class CanSeeAction : GoapAction {
 	}
 
 	public override bool requiresInRange(){
-		return false; //the sight script will determine sight range and pass the canSee variable to
-		// the checkProceduralPrecondition().
+		return false;
 	}
 
 	public override bool checkProceduralPrecondition(GameObject agent)
 	{
-		if(GetComponent<Signt>().m_canSeePlayer == true)
+		if( sight.m_canSeePlayer == true)
 		{
 			target = GameObject.FindWithTag("Player");
 			if (target != null)
 			{
+				Debug.Log("I can see the player now");
 				return true;
 			}
 		}	
@@ -51,9 +57,9 @@ public class CanSeeAction : GoapAction {
 
 	public override bool perform(GameObject agent)
 	{
-	    m_sawPlayer = true;
-	    //return m_sawPlayer;
-	    Debug.Log("Ah ketch eem!")	
-            return true;
+		m_sawPlayer = true;
+	    return m_sawPlayer;
+	    Debug.Log("Ah ketch eem!");	
+        return true;
 	}
 }
