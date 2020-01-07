@@ -7,7 +7,6 @@ public class EvadeAction : GoapAction {
     [SerializeField] float timeBetweenAttack = 1.0f;
     testEnemyHealth health;
     Animator anim;
-    bool isHiding = false;
     bool avoid = false;
     bool injured = false;
     float threatDistance = 20.0f;
@@ -31,7 +30,6 @@ public class EvadeAction : GoapAction {
     public override void reset() {
 		avoid = false;
 		target = null;
-	    isHiding = false;
 	}
 
 	public override bool isDone(){
@@ -76,7 +74,6 @@ public class EvadeAction : GoapAction {
 	public override bool perform(GameObject agent)	        
     {
         anim.SetTrigger("hidingAnimation");
-	    isHiding = true;
 	    avoid = true;
 	    return true;
 	}        
