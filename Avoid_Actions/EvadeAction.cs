@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EvadeAction : GoapAction {
-//attach the safeHaven component to any hiding spot(currently only 1 supported)
-    [SerializeField] float timeBetweenAttack = 1.0f;
+//attach the HidingSpotComponent to any hiding spot
     testEnemyHealth health;
     Animator anim;
     bool avoid = false;
     bool injured = false;
     float threatDistance = 20.0f;
-    HidingSpotComponent targetSpot; // where we chop the firewood
+    HidingSpotComponent targetSpot; // where we hide
 	
 	void Start()
     {
@@ -29,7 +28,7 @@ public class EvadeAction : GoapAction {
       
     public override void reset() {
 		avoid = false;
-		target = null;
+		targetSpot = null;
 	}
 
 	public override bool isDone(){
@@ -74,7 +73,7 @@ public class EvadeAction : GoapAction {
 	public override bool perform(GameObject agent)	        
     {
         anim.SetTrigger("hidingAnimation");
-	    avoid = true;
+	    //avoid = true;
 	    return true;
 	}        
 	
