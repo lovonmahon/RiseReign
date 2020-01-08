@@ -4,31 +4,29 @@ using UnityEngine;
 
 public class EvadeAction : GoapAction {
 //attach the HidingSpotComponent to any hiding spot
-    testEnemyHealth health;
+    EnemyHealth health;
     Animator anim;
     bool avoid = false;
-    bool injured = false;
-    float threatDistance = 20.0f;
+    //bool injured = false;//handle later
+    //float threatDistance = 20.0f;
     HidingSpotComponent targetSpot; // where we hide
 	
 	void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
-	health = this.GetComponent<testEnemyHealth>();
+		//health = this.GetComponent<EnemyHealth>();//handle this later
     }
     
     public EvadeAction()
     {
-        addPrecondition("runAway", false);
-        addPrecondition("hasHealth", false);	    
+		addPrecondition("canSeePlayer", true );    	
 	    addEffect ("runAway", true );
-	//cost = 1.0f;
         name = "EvadeAction";
 	}
       
     public override void reset() {
 		avoid = false;
-		targetSpot = null;
+		target = null;
 	}
 
 	public override bool isDone(){
@@ -42,7 +40,7 @@ public class EvadeAction : GoapAction {
 	public override bool checkProceduralPrecondition(GameObject agent)
     {
 	   // find the nearest hiding spot 
-		HidingSpotComponent[] spots = (HidingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(HidingSpotComponent));
+		HidingSpotComponent[] spots = GameObject.FindObjectsOfType<HidingSpotComponent>();
 		HidingSpotComponent closest = null;
 		float closestDist = 0;
 		
@@ -61,13 +59,16 @@ public class EvadeAction : GoapAction {
 				}
 			}
 		}
-		if (closest == null)
-			return false;
-
+		
 		targetSpot = closest;
 		target = targetSpot.gameObject;
-		
-		return closest != null;
+
+		if (closest != null)
+		{
+			return true;
+		}
+
+		return false;
     }
 
 	public override bool perform(GameObject agent)	        
