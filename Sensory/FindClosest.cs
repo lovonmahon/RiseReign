@@ -1,5 +1,5 @@
-using System.COllections;
-using System.COllections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RiseReign
