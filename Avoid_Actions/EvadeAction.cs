@@ -73,7 +73,7 @@ public class EvadeAction : GoapAction {
 	public override bool perform(GameObject agent)	        
     {
         anim.SetTrigger("hidingAnimation");
-	    //avoid = true;
+	    avoid = true;
 	    return true;
 	}        
 	
