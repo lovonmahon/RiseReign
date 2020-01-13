@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EvadeAction : GoapAction {
 //attach the HidingSpotComponent to any hiding spot
-    Transform hidingSpotTransform;
+    //Transform hidingSpotTransform;
     EnemyHealth health;
     Animator anim;
     bool avoid = false;
@@ -17,7 +17,7 @@ public class EvadeAction : GoapAction {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
 		//health = this.GetComponent<EnemyHealth>();//handle this later
-		hidingSpotTransform = target.transform;
+		//hidingSpotTransform = target.transform;
     }
     
     public EvadeAction()
@@ -64,7 +64,7 @@ public class EvadeAction : GoapAction {
 		}
 		
 		targetSpot = closest;
-		target = targetSpot.gameObject;
+		target = targetSpot.gameObject.transform.position;
 
 		if (closest != null)
 		{
