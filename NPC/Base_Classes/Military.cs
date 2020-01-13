@@ -33,7 +33,7 @@ public abstract class Military : MonoBehaviour, IGoap
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();	
-		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.helt > 30) ));
 		worldData.Add(new KeyValuePair<string, object>("flee", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
 		worldData.Add(new KeyValuePair<string, object>("rest", false ));
