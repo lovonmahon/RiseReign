@@ -27,7 +27,7 @@ public class AttackAction : GoapAction {
         addPrecondition("canSeePlayer", true);
 		addEffect ("fight", true);
 		//addEffect ("doJob", true);
-        name = "Attack the player";
+        name = "Attack the player if I'm healthy enough";
 	}
     //Deal with look at later.
 	/*void Update()
@@ -54,7 +54,6 @@ public class AttackAction : GoapAction {
 
 	public override bool checkProceduralPrecondition(GameObject agent){
 		target = GameObject.FindWithTag("Player");
-		{
 			if( target != null )
 			{
                 if( sight.m_canSeePlayer == true)
@@ -62,8 +61,6 @@ public class AttackAction : GoapAction {
 					return true;
 				}
 			}	
-		}
-		//return target != null;
         	return false;
 	}
 
