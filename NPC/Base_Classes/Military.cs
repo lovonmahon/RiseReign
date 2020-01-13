@@ -8,6 +8,7 @@ public abstract class Military : MonoBehaviour, IGoap
 {
 	[Header("Base AI Class")]//Header is a label to highlight features in inspector.
 	NavMeshAgent agent;
+	Health health;
 	Animator anim;
 	Vector3 previousDestination;
 	//Inventory inv;
@@ -24,6 +25,7 @@ public abstract class Military : MonoBehaviour, IGoap
 	{
 		agent = this.GetComponent<NavMeshAgent>();
 		anim = this.GetComponentInChildren<Animator>();
+		health = this.GetComponent<Health>();
 		//inv = this.GetComponent<Inventory>();
 		//stockpile = GetComponent<Inventory>();
 	}
@@ -31,7 +33,7 @@ public abstract class Military : MonoBehaviour, IGoap
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
 	{
 		HashSet<KeyValuePair<string,object>> worldData = new HashSet<KeyValuePair<string,object>> ();	
-		//worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
+		worldData.Add(new KeyValuePair<string, object>("hasHealth", (health.currentHealth > 30) ));
 		worldData.Add(new KeyValuePair<string, object>("flee", false )); 
 		worldData.Add(new KeyValuePair<string, object>("canSeePlayer", false ));
 		worldData.Add(new KeyValuePair<string, object>("rest", false ));
