@@ -68,8 +68,8 @@ public class EvadeAction : GoapAction {
 
 		if (closest != null)
 		{
-			return true;
 			MoveToLocation( target );
+			return true;
 			//agent.SetDestination(target);//Trying to use the MoveToLocation() to handle movement below..
 		}
 
