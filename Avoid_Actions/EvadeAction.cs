@@ -19,6 +19,21 @@ public class EvadeAction : GoapAction {
 		//health = this.GetComponent<EnemyHealth>();//handle this later
 		//hidingSpotTransform = target.transform;
     }
+
+    void Update()
+    {
+    	Transform trans = GetComponent<Transform>();
+    	if( avoid && trans.position != target.position )
+    	{
+    		//agent.SetDestination( target );
+    		MoveToLocation( target );
+    	}
+
+    	if( trans.position == target.position )
+    	{
+    		agent.isStoped = true;
+    	}
+    }
     
     public EvadeAction()
     {
