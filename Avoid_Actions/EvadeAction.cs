@@ -1,34 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using RiseReign;
 
 public class EvadeAction : GoapAction {
-//attach the HidingSpotComponent to any hiding spot(currently only 1 supported)
-    EnemyHealth health;
-    Animator anim;
+
+	//public GameObject place;
+    public Animator anim;
     bool isHiding = false;
     bool avoid = false;
-    bool injured = false;
-    float threatDistance = 20.0f;
-    HidingSpotComponent targetSpot; // where we chop the firewood
-	
+    Sight sight;
+	HidingSpotComponent targetSpot; 
+	//Try caching the animator if performance suffers from initializing it in the perform().
+	/*void Awake(){
+		anim = GameObject.GetComponent<Animator>();
+	}*/
+
 	void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
-	    health = this.GetComponent<EnemyHealth>();
+	    sight = gameObject.GetComponent<Sight>();
     }
     
-    public EvadeAction()
-    {
-        addPrecondition("canSeePlayer", true);
-        //addPrecondition("runAway", false);
-        //addPrecondition("hasHealth", false);	    
-	    addEffect ("runAway", true );
-	//cost = 1.0f;
-        name = "EvadeAction";
+    public EvadeAction(){
+		addPrecondition("canSeePlayer", true);
+		addPrecondition ("flee", false);
+		addEffect ("doJob", true);
+        name = "Evade";
 	}
-      
+    //Deal with look at later.
+	/*void Update()
+    {
+        	if(target != null)
+		{
+			this.transform.LookAt(target);//always look at the target
+			//timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
+		}
+    }*/
+    
     public override void reset() {
 		avoid = false;
 		target = null;
@@ -43,10 +53,8 @@ public class EvadeAction : GoapAction {
 		return true;
 	}
 
-	public override bool checkProceduralPrecondition(GameObject agent)
-    {
-	   // find the nearest hiding spot 
-		HidingSpotComponent[] spots = (HidingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(HidingSpotComponent));
+	public override bool checkProceduralPrecondition(GameObject agent){
+     	HidingSpotComponent[] spots = (HidingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(HidingSpotComponent));
 		HidingSpotComponent closest = null;
 		float closestDist = 0;
 		
@@ -74,12 +82,15 @@ public class EvadeAction : GoapAction {
 		return closest != null;
     }
 
-	public override bool perform(GameObject agent)	        
-    {
-        anim.SetTrigger("hidingAnimation");
-	    isHiding = true;
+	public override bool perform(GameObject agent){
+		anim.SetBool("hidingAnimation", true);
+		isHiding = true;
 	    avoid = true;
-	    return true;
-	}        
+        return true;
+	}
+
+	
+	
+
 	
 }
