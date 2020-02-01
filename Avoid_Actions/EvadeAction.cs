@@ -1,50 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using RiseReign;
 
 public class EvadeAction : GoapAction {
-//attach the HidingSpotComponent to any hiding spot
-    //Transform hidingSpotTransform;
+//attach the HidingSpotComponent to any hiding spot(currently only 1 supported)
     EnemyHealth health;
     Animator anim;
+    bool isHiding = false;
     bool avoid = false;
-    //bool injured = false;//handle later
-    //float threatDistance = 20.0f;
-    HidingSpotComponent targetSpot; // where we hide
+    bool injured = false;
+    float threatDistance = 20.0f;
+    HidingSpotComponent targetSpot; // where we chop the firewood
 	
 	void Start()
     {
         anim = gameObject.GetComponentInChildren<Animator>();
-		//health = this.GetComponent<EnemyHealth>();//handle this later
-		//hidingSpotTransform = target.transform;
-    }
-
-    void Update()
-    {
-    	Transform trans = GetComponent<Transform>();
-    	if( avoid && trans.position != target.position )
-    	{
-    		//agent.SetDestination( target );
-    		MoveToLocation( target );
-    	}
-
-    	if( trans.position == target.position )
-    	{
-    		agent.isStoped = true;
-    	}
+	    health = this.GetComponent<EnemyHealth>();
     }
     
     public EvadeAction()
     {
-		addPrecondition("canSeePlayer", true );    	
+        addPrecondition("canSeePlayer", true);
+        //addPrecondition("runAway", false);
+        //addPrecondition("hasHealth", false);	    
 	    addEffect ("runAway", true );
+	//cost = 1.0f;
         name = "EvadeAction";
 	}
       
     public override void reset() {
 		avoid = false;
 		target = null;
+	    isHiding = false;
 	}
 
 	public override bool isDone(){
@@ -58,7 +46,7 @@ public class EvadeAction : GoapAction {
 	public override bool checkProceduralPrecondition(GameObject agent)
     {
 	   // find the nearest hiding spot 
-		HidingSpotComponent[] spots = GameObject.FindObjectsOfType<HidingSpotComponent>();
+		HidingSpotComponent[] spots = (HidingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(HidingSpotComponent));
 		HidingSpotComponent closest = null;
 		float closestDist = 0;
 		
@@ -77,31 +65,21 @@ public class EvadeAction : GoapAction {
 				}
 			}
 		}
-		
+		if (closest == null)
+			return false;
+
 		targetSpot = closest;
-		target = targetSpot.gameObject.transform.position;
-
-		if (closest != null)
-		{
-			MoveToLocation( target );
-			return true;
-			//agent.SetDestination(target);//Trying to use the MoveToLocation() to handle movement below..
-		}
-
-		return false;
+		target = targetSpot.gameObject;
+		
+		return closest != null;
     }
 
 	public override bool perform(GameObject agent)	        
     {
         anim.SetTrigger("hidingAnimation");
+	    isHiding = true;
 	    avoid = true;
 	    return true;
-	}
-
-	public void MoveToLocation( Vector3 targetPoint )
-	{
-		agent.destination = targetPoint;
-		agent.isStopped = false;
 	}        
 	
 }
