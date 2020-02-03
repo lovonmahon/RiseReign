@@ -64,19 +64,23 @@ public class AttackAction : GoapAction {
 			}	
 		}
 		//return target != null;
-        	return false;
+        return false;
 	}
 
 	public override bool perform(GameObject agent){
-		anim.SetBool("farm", true);
-		Debug.Log("Attacking");
-		//anim.SetTrigger("attack");
+		
+		if( Vector3.Distance(transform.position, target.transform.position) <= 2 )
+		{
+			anim.SetTrigger("attack");
+			attacked = true;
+        	return true;
+		}
+		
 		/*if ( target.isBlocking )
 		{
 			transform.RotateAround( sight.dirToTarget, Vector3.up, 90f * Time.deltaTime );//points to the targets vector 3 location to rotate around.
 		}*/ //deal with blocking later.	
               
-		attacked = true;
-        return true;
+		return false;
 	}
 }
