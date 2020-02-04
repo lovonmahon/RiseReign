@@ -12,7 +12,7 @@ namespace RiseReign {
 		private float m_investigateRange = 5;//range in which to investigate
 
 
-		private Transform m_playerLastKnownPosition;//last place player was spotted.
+		private Vector3 m_playerLastKnownPosition;//last place player was spotted.
 		public bool m_canSeePlayer = false;//can the agent see the player?
 
 
@@ -79,7 +79,7 @@ namespace RiseReign {
 							m_canSeePlayer = true;
                             Debug.Log("Player spotted!");
 							//this.GetComponent<Worker>.m_interrupt = true;//Interrupt current action.
-							m_playerLastKnownPosition = target;
+							m_playerLastKnownPosition = target.transform.position;
 							m_investigate = true;
 						}
 					}
@@ -91,7 +91,7 @@ namespace RiseReign {
 				if( m_investigate)
 				{
 					//this.GetComponent<Worker>.m_interrupt = true;
-					m_investigate = false;
+					m_investigate = true;
 					m_canSeePlayer = false;
 					//m_alertNoise = false; Implement noise later.
 
