@@ -11,6 +11,7 @@ public class EvadeAction : GoapAction {
     bool isHiding = false;
     bool avoid = false;
     Sight sight;
+    LookAt look;
 	HidingSpotComponent targetSpot; 
 	NavMeshAgent agent;
 	float startTime = 0;	
@@ -25,7 +26,8 @@ public class EvadeAction : GoapAction {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
 	    sight = gameObject.GetComponent<Sight>();
-		agent = this.GetComponent<NavMeshAgent>();	
+		agent = this.GetComponent<NavMeshAgent>();
+		look = 	this.GetComponent<LookAt>();
     }
     
     public EvadeAction(){
@@ -93,6 +95,7 @@ public class EvadeAction : GoapAction {
 		if (startTime == 0)
 		{
 			anim.SetBool( "hidingAnimation", true );
+			look.target = gameObject.FindWithTag("Player").transform;//needs testing.
 			startTime = Time.time;
 		}
 
