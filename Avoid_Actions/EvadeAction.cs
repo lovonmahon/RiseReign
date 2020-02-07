@@ -12,6 +12,10 @@ public class EvadeAction : GoapAction {
     bool avoid = false;
     Sight sight;
 	HidingSpotComponent targetSpot; 
+	NavMeshAgent agent;
+	float startTime = 0;	
+	public float hideDuration = 10; // seconds
+
 	//Try caching the animator if performance suffers from initializing it in the perform().
 	/*void Awake(){
 		anim = GameObject.GetComponent<Animator>();
@@ -21,18 +25,19 @@ public class EvadeAction : GoapAction {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
 	    sight = gameObject.GetComponent<Sight>();
+		agent = this.GetComponent<NavMeshAgent>();	
     }
     
     public EvadeAction(){
 		addPrecondition("canSeePlayer", true);
-		addPrecondition ("flee", false);
+		//addPrecondition ("flee", false);//Is this still needed?
 		addEffect ("doJob", true);
         name = "Evade";
 	}
     //Deal with look at later.
 	/*void Update()
     {
-        	if(target != null)
+        if(target != null)
 		{
 			this.transform.LookAt(target);//always look at the target
 			//timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
@@ -43,6 +48,7 @@ public class EvadeAction : GoapAction {
 		avoid = false;
 		target = null;
 	    isHiding = false;
+	    startTime = 0;
 	}
 
 	public override bool isDone(){
@@ -82,15 +88,21 @@ public class EvadeAction : GoapAction {
 		return closest != null;
     }
 
-	public override bool perform(GameObject agent){
-		anim.SetBool("hidingAnimation", true);
-		isHiding = true;
-	    avoid = true;
-        return true;
+	public override bool perform(GameObject agent)
+	{
+		if (startTime == 0)
+		{
+			anim.SetBool( "hidingAnimation", true );
+			startTime = Time.time;
+		}
+
+		if (Time.time - startTime > hideDuration) 
+		{
+			completed = true;
+			anim.SetBool( "hidingAnimation", false );
+			isHiding = true;
+	    	avoid = true;
+		}
+		return true;
 	}
-
-	
-	
-
-	
 }
