@@ -11,6 +11,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 	Animator anim;
 	Vector3 previousDestination;
 	Inventory inv;
+	Stockpile stock;
 	public Inventory stockpile;
 	[SerializeField] float rotationSpeed = 2.0f;
 	[SerializeField] float visDist = 20.0f;
@@ -25,7 +26,7 @@ public abstract class Worker : MonoBehaviour, IGoap
 		agent = this.GetComponent<NavMeshAgent>();
 		anim = this.GetComponentInChildren<Animator>();
 		inv = this.GetComponent<Inventory>();
-		stockpile = GetComponent<Inventory>();
+		stock = gameObject.FindWithTag("stockpile").GetComponent<Stockpile>();
 	}
 
 	public HashSet<KeyValuePair<string,object>> GetWorldState () 
