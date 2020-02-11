@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetWater : GoapAction {
+public class GetWaterAction : GoapAction {
 
 	Animator anim;
 
 	bool completed = false;
 	float startTime = 0;
-	public float workDuration = 5; // seconds
+	public float workDuration = 3; // seconds
 	
 	public GetWater () {
 		addPrecondition ("hasDeliveryWater", false ); 
@@ -39,7 +39,33 @@ public class GetWater : GoapAction {
 	
 	public override bool checkProceduralPrecondition (GameObject agent)
 	{	
-		return true;
+		WaterSpotComponent[] spots = (WaterSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(WaterSpotComponent));
+		WaterSpotComponent closest = null;
+		float closestDist = 0;
+		
+		foreach (WaterSpotComponent spot in spots) {
+			if (closest == null) {
+				// first one, so choose it for now
+				closest = spot;
+				closestDist = (spot.gameObject.transform.position - agent.transform.position).magnitude;
+			} else {
+				// is this one closer than the last?
+				float dist = (spot.gameObject.transform.position - agent.transform.position).magnitude;
+				if (dist < closestDist) {
+					// we found a closer one, use it
+					closest = spot;
+					closestDist = dist;
+				}
+			}
+		}
+		if (closest == null)
+			return false;
+
+		targetSpot = closest;
+		target = targetSpot.gameObject;
+		
+		return closest != null;
+    }
 	}
 	
 	public override bool perform (GameObject agent)
