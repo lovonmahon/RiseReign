@@ -8,6 +8,7 @@ public class FishAction : GoapAction {
 	float startTime = 0;
 	public float workDuration = 10; // seconds
 	Animator anim;
+	FishingSpotComponent targetSpot;
 	
 	void Start()
 	{
@@ -38,7 +39,32 @@ public class FishAction : GoapAction {
 	
 	public override bool checkProceduralPrecondition (GameObject agent)
 	{	
-		return true;
+		FishingSpotComponent[] spots = (FishingSpotComponent[])UnityEngine.GameObject.FindObjectsOfType(typeof(FishingSpotComponent));
+		FishingSpotComponent closest = null;
+		float closestDist = 0;
+		
+		foreach (FishingSpotComponent spot in spots) {
+			if (closest == null) {
+				// first one, so choose it for now
+				closest = spot;
+				closestDist = (spot.gameObject.transform.position - agent.transform.position).magnitude;
+			} else {
+				// is this one closer than the last?
+				float dist = (spot.gameObject.transform.position - agent.transform.position).magnitude;
+				if (dist < closestDist) {
+					// we found a closer one, use it
+					closest = spot;
+					closestDist = dist;
+				}
+			}
+		}
+		if (closest == null)
+			return false;
+
+		targetSpot = closest;
+		target = targetSpot.gameObject;
+		
+		return closest != null;
 	}
 	
 	public override bool perform (GameObject agent)
@@ -53,9 +79,9 @@ public class FishAction : GoapAction {
 		if (Time.time - startTime > workDuration) 
 		{
 			Debug.Log("Finished: " + name);
-			stock = gameObject.FindWithTag("stockpile").GetComponent<Stockpile>().fish += 1;
+			//stock = gameObject.FindWithTag("stockpile").GetComponent<Stockpile>().fish += 1;
 			completed = true;
-			anim.SetBool( "fish", false );
+			//anim.SetBool( "fish", false );
 		}
 		return true;
 	}
