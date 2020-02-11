@@ -14,6 +14,11 @@ public class AIMemory : MonoBehaviour
 
     //If the player is spotted, timeSinceLastSawPlayer = 0;
     
+    void Start()
+    {
+        m_sight = this.GetComponent<Sight>();
+    }
+    
     void Update()
     {
         if( m_sight.m_canSeePlayer == true )
