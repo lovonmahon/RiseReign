@@ -63,10 +63,10 @@ public class DropOffFirewoodAction : GoapAction
 	
 	public override bool perform (GameObject agent)
 	{
-		BackpackComponent backpack = (BackpackComponent)agent.GetComponent(typeof(BackpackComponent));
-		targetSupplyPile.numFirewood += backpack.numFirewood;
+		//BackpackComponent backpack = (BackpackComponent)agent.GetComponent(typeof(BackpackComponent));
+		//targetSupplyPile.numFirewood += backpack.numFirewood;
 		droppedOffFirewood = true;
-		backpack.numFirewood = 0;
+		//backpack.numFirewood = 0;
 		
 		return true;
 	}
