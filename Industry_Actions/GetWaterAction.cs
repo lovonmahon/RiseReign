@@ -9,6 +9,7 @@ public class GetWaterAction : GoapAction {
 	bool completed = false;
 	float startTime = 0;
 	public float workDuration = 3; // seconds
+	WaterSpotComponent targetSpot; 
 	
 	public GetWater () {
 		addPrecondition ("hasDeliveryWater", false ); 
