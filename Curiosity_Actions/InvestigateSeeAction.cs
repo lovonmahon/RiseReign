@@ -8,6 +8,7 @@ public class InvestigateSeeAction : GoapAction {
     Animator anim;
     AIMemory memory;
     Sight sight
+    bool m_investigate = false;
 
 	void Start()
     {
@@ -29,7 +30,7 @@ public class InvestigateSeeAction : GoapAction {
     }
     
     public override void reset() {
-		target.transform.position = null;
+		m_investigate = false;
 	}
 
 	public override bool isDone(){
@@ -53,6 +54,6 @@ public class InvestigateSeeAction : GoapAction {
 	public override bool perform(GameObject agent)
 	{
 		m_investigate = true;
-	    return m_investigate;
-        return true;
+        	return true;
 	}
+	return false;
