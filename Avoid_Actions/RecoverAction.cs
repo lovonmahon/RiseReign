@@ -6,12 +6,12 @@ using RiseReign;
 
 public class RecoverAction : GoapAction {
 
-	bool completed = false;
 	float startTime = 0;
-    public float workDuration = 2; 
+    public float healDuration = 5; 
     public Animator anim;
-    bool isHurt = false;
+    bool isHealed = false;
     Sight sight;
+    Health helt;
 	HealingSpotComponent targetSpot; 
 	//Try caching the animator if performance suffers from initializing it in the perform().
 	/*void Awake(){
@@ -22,6 +22,7 @@ public class RecoverAction : GoapAction {
     {
         anim = gameObject.GetComponentInChildren<Animator>();
 	    sight = gameObject.GetComponent<Sight>();
+	    helt = this.GetComponent<Health>();
     }
     
     public RecoverAction(){
@@ -41,14 +42,12 @@ public class RecoverAction : GoapAction {
     
     public override void reset() {
 		target = null;
-	    isHurt = false;
+	    isHealed = false;
         startTime = 0;
-		completed = false;
 	}
 
 	public override bool isDone(){
-		return isHurt;
-		return completed;
+		return isHealed;
 	}
 
 	public override bool requiresInRange(){
@@ -91,15 +90,15 @@ public class RecoverAction : GoapAction {
 			startTime = Time.time;
 		}
 
-		if (Time.time - startTime > workDuration) 
+		if (Time.time - startTime > healDuration) 
 		{
+			//anim.SetBool("healingAnimation", true);
 			//Debug.Log("Finished: " + name);
-			//this.GetComponent<Inventory>().flourLevel += 5;
+			//recoverValue = 100 - helt.currentHealth;
+			//helt.currentHealth += recoverValue;
 			//windmill.flourLevel -= 5;
-			completed = true;
-            isHurt = true;
-		}//anim.SetBool("hidingAnimation", true);
-		isHurt = true;
-        return true;
+            isHealed = true;
+		}
+		return true;
 	}
 }
