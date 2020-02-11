@@ -7,8 +7,7 @@ using RiseReign;
 public class EvadeAction : GoapAction {
 
 	//public GameObject place;
-    public Animator anim;
-    bool isHiding = false;
+    public Animator anim;    
     bool avoid = false;
     Sight sight;
     LookAt look;
@@ -48,8 +47,7 @@ public class EvadeAction : GoapAction {
     
     public override void reset() {
 		avoid = false;
-		target = null;
-	    isHiding = false;
+		target = null;	    
 	    startTime = 0;
 	}
 
@@ -101,9 +99,7 @@ public class EvadeAction : GoapAction {
 
 		if (Time.time - startTime > hideDuration) 
 		{
-			completed = true;
 			anim.SetBool( "hidingAnimation", false );
-			isHiding = true;
 	    	avoid = true;
 		}
 		return true;
