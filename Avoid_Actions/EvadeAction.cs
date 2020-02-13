@@ -32,6 +32,7 @@ public class EvadeAction : GoapAction {
     public EvadeAction(){
 		addPrecondition("canSeePlayer", true);
 		//addPrecondition ("flee", false);//Is this still needed?
+	    	addEffect ("isHiding", true);
 		addEffect ("doJob", true);
         name = "Evade";
 	}
