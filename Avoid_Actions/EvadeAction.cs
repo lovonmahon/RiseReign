@@ -90,18 +90,7 @@ public class EvadeAction : GoapAction {
 
 	public override bool perform(GameObject agent)
 	{
-		if (startTime == 0)
-		{
-			anim.SetBool( "hidingAnimation", true );
-			look.target = gameObject.FindWithTag("Player").transform;//needs testing.
-			startTime = Time.time;
-		}
-
-		if (Time.time - startTime > hideDuration) 
-		{
-			anim.SetBool( "hidingAnimation", false );
-	    	avoid = true;
-		}
+		avoid = true;
 		return true;
 	}
 }
