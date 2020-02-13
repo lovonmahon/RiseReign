@@ -6,7 +6,7 @@ namespace RiseReign{
 	
 	public class Health : MonoBehaviour
 	{
-		public int helt = 100;
+		public int currentHealth = 100;
 
 		void Start()
 		{
@@ -15,16 +15,21 @@ namespace RiseReign{
 
 		void Update()
 		{
-			if( helt <= 0 )
+			if( currentHealth <= 0 )
 			{
-				helt = 0;
+				currentHealth = 0;
 				Die();
 			}
+			
+			if( currentHealth > 100 )
+			{
+				currentHealth = 100;
+			}	
 		}
 
 		public void TakeDamage( int damage )
 		{
-			helt -= damage; //loses damage amount from helt.
+			currentHealth -= damage; //loses damage amount from helt.
 		}
 
 		public void Die()
@@ -32,6 +37,12 @@ namespace RiseReign{
 			//Grab some components and disable them first.
 			//Enable ragdoll.
 			//Spawn bones/artifacts procedurally.
+		}
+		
+		void Recover()
+		{
+			int need = 100 - currentHealth;//calculate how much is needed to raise health back to 100%
+			currentHealth = need += currentHealth;//take the needed amount and add it to the current health value.
 		}
 	}
 }
