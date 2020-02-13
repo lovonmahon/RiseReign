@@ -42,6 +42,7 @@ public abstract class Military : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("escort", false ));
 		worldData.Add(new KeyValuePair<string, object>("steal", false ));
 		worldData.Add(new KeyValuePair<string, object>("patrol", false ));
+		worldData.Add(new KeyValuePair<string, object>("needsToHide", false ));
 		
 		
 		
@@ -53,7 +54,7 @@ public abstract class Military : MonoBehaviour, IGoap
 	{
 		HashSet<KeyValuePair<string,object>> goal = new HashSet<KeyValuePair<string,object>> ();
 		goal.Add(new KeyValuePair<string, object>("doJob", true ));
-		
+				
 
 		return goal;
 	}
