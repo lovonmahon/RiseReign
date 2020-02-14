@@ -71,7 +71,7 @@ public class AttackAction : GoapAction {
 		
 		if( Vector3.Distance(transform.position, target.transform.position) <= 2 )
 		{
-			anim.SetTrigger("attack");
+			anim.SetBool( "attack", true );//change to bool in animator.
 			attacked = true;
         	return true;
 		}
@@ -80,7 +80,7 @@ public class AttackAction : GoapAction {
 		{
 			transform.RotateAround( sight.dirToTarget, Vector3.up, 90f * Time.deltaTime );//points to the targets vector 3 location to rotate around.
 		}*/ //deal with blocking later.	
-              
+        anim.SetBool( "attack", false );      
 		return false;
 	}
 }
