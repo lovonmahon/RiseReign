@@ -51,6 +51,7 @@ public class  PatrolAction : GoapAction {
 			}
 			completed = true;
 		}
+		agent.SetDestination( waypoints[currentWP].transform.position );
 		return true;
 	}
 	
