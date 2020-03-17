@@ -8,6 +8,9 @@ public class RecoverAction : GoapAction {
 
 	float startTime = 0;
     public float healDuration = 5; 
+    [SerializeField]
+    float recoverValue;
+
     public Animator anim;
     bool isHealed = false;
     Sight sight;
