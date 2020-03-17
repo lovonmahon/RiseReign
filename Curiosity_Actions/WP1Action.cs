@@ -14,7 +14,7 @@ public class  WP1Action : GoapAction {
 	//public float workDuration = 2; // seconds
 	
 	public PatrolAction () {
-		addPrecondition ("atWP4", true); 
+		addPrecondition ("atWP1", false); 
 		addEffect ("atWP1", true);
 		name = "WP1Action";
 	}
