@@ -91,7 +91,17 @@ public class EvadeAction : GoapAction {
 
 	public override bool perform(GameObject agent)
 	{
-		avoid = true;
+		if (startTime == 0)
+		{
+			//Debug.Log("Starting: " + name);
+			startTime = Time.time;
+		}
+
+		if (Time.time - startTime > hideDuration) 
+		{
+			//Debug.Log("Finished: " + name);
+			avoid = true;
+		}
 		return true;
 	}
 }
