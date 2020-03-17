@@ -41,7 +41,10 @@ public abstract class Military : MonoBehaviour, IGoap
 		worldData.Add(new KeyValuePair<string, object>("investigate", false ));
 		worldData.Add(new KeyValuePair<string, object>("escort", false ));
 		worldData.Add(new KeyValuePair<string, object>("steal", false ));
-		worldData.Add(new KeyValuePair<string, object>("atWP4", true ));//Force npc to initialize patrol at WP1.
+		worldData.Add(new KeyValuePair<string, object>("atWP1", false ));
+		worldData.Add(new KeyValuePair<string, object>("atWP2", false ));
+		worldData.Add(new KeyValuePair<string, object>("atWP3", false ));
+		worldData.Add(new KeyValuePair<string, object>("atWP4", false ));
 		worldData.Add(new KeyValuePair<string, object>("needsToHide", false ));
 		worldData.Add(new KeyValuePair<string, object>("hasFishingRod", (inv.fishingRod > 1) ));
 		worldData.Add(new KeyValuePair<string, object>("hasWheat", (inv.Wheat > 4) ));
