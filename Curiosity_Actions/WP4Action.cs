@@ -15,7 +15,7 @@ public class  WP4Action : GoapAction {
 	
 	public PatrolAction () {
 		addPrecondition ("atWP3", true); 
-		addEffect ("WP4Action", true);
+		addEffect ("atWP4", true);
 		name = "WP4Action";
 	}
 	
