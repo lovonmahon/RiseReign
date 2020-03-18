@@ -9,8 +9,10 @@ public class AttackAction : GoapAction {
 
     public Animator anim;
     bool attacked = false;
+    float attackDistance = 3.0f;
     Sight sight;
     NavMeshAgent agent;
+    Health helt;
 	//Try caching the animator if performance suffers from initializing it in the perform().
 	/*void Awake(){
 		anim = GameObject.GetComponent<Animator>();
@@ -21,6 +23,8 @@ public class AttackAction : GoapAction {
         anim = gameObject.GetComponentInChildren<Animator>();
 	    sight = gameObject.GetComponent<Sight>();
 	    agent = this.GetComponent<NavMeshAgent>();
+	    helt = this.GetComponent<Health>();
+	    target = GameObject.FindWithTag("Player");
     }
     
     public AttackAction(){
@@ -29,15 +33,18 @@ public class AttackAction : GoapAction {
 		addEffect ("doJob", true);
         name = "Attack the player";
 	}
-    //Deal with look at later.
-	/*void Update()
+    
+    //look at the target as long as it's within attack range.
+	void Update()
     {
-        	if(target != null)
+        if( target != null )
 		{
-			this.transform.LookAt(target);//always look at the target
-			//timeSinceLastAttack += Time.deltaTime; // checks when last attack occurred.
+			if( Vector3.Distance(transform.position, target.transform.position) <= attackDistance )
+			{
+				this.transform.LookAt( target.transform );//always look at the target
+			}
 		}
-    }*/
+    }
     
     public override void reset() {
 		attacked = false;
@@ -53,34 +60,35 @@ public class AttackAction : GoapAction {
 	}
 
 	public override bool checkProceduralPrecondition(GameObject agent){
-		target = GameObject.FindWithTag("Player");
+		
+		if( target != null )
 		{
-			if( target != null )
+            if( sight.m_canSeePlayer == true)
 			{
-                if( sight.m_canSeePlayer == true)
-				{
-					return true;
-				}
-			}	
-		}
+				if( helt.health > 30 )
+					{
+						return true;
+					}
+			}
+		}	
 		//return target != null;
         return false;
 	}
 
 	public override bool perform(GameObject agent){
-		
-		if( Vector3.Distance(transform.position, target.transform.position) <= 2 )
+			
+		if( Vector3.Distance(transform.position, target.transform.position) <= attackDistance )
 		{
+			this.transform.LookAt(target);
 			anim.SetBool( "attack", true );//change to bool in animator.
 			attacked = true;
-        	return true;
+        	return attacked;
 		}
-		
-		/*if ( target.isBlocking )
+		else
 		{
-			transform.RotateAround( sight.dirToTarget, Vector3.up, 90f * Time.deltaTime );//points to the targets vector 3 location to rotate around.
-		}*/ //deal with blocking later.	
-        anim.SetBool( "attack", false );      
-		return false;
+			anim.SetBool( "attack", false );//change to bool in animator.
+			attacked = false;
+        	return attacked;
+		}	
 	}
 }
