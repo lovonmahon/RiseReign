@@ -6,8 +6,17 @@ public class BuildWallAction : GoapAction {
 
 	bool completed = false;
 	float startTime = 0;
-	public float workDuration = 2; // seconds
+	public float buildWallDuration = 30; // seconds
+	public List<GameObject> walls = new List<GameObject>();//a list of all wall game objects
+	Health health;
+
+	//The AI should go to which ever wall is damaged to repair it.
 	
+	void Start()
+	{
+		health = gameObject.FindWithTag("Wall").GetComponent<Health>();
+	}
+
 	public BuildWallAction () {
 		addPrecondition ("buildWall", false); 
 		addEffect ("buildWall", true);
@@ -32,7 +41,16 @@ public class BuildWallAction : GoapAction {
 	
 	public override bool checkProceduralPrecondition (GameObject agent)
 	{	
-		return true;
+		foreach( GameObject wall in walls )
+		{
+			if (wall.health.damage > 50 )
+			{
+				target = wall;
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
 	public override bool perform (GameObject agent)
@@ -41,13 +59,15 @@ public class BuildWallAction : GoapAction {
 		{
 			Debug.Log("Starting: " + name);
 			startTime = Time.time;
+			//Play building animation
 		}
 
-		if (Time.time - startTime > workDuration) 
+		if (Time.time - startTime > buildWallDuration) 
 		{
 			Debug.Log("Finished: " + name);
 			this.GetComponent<Inventory>().toolbox -= 1;
 			completed = true;
+			//Stop building animation.
 		}
 		return true;
 	}
