@@ -8,6 +8,7 @@ namespace RiseReign
 	{
 		[SerializeField]
 		int damageAmt = 2;
+		float fireDamageAmt = 0.6f;
 		int buildingHealth = 100;
 
 		bool canBuild = false;
@@ -28,11 +29,30 @@ namespace RiseReign
 			{
 				TakeDamage( damageAmt );//Set value in inspector.
 			}
+
+		}
+
+		void OnTriggerStay( Collider other )
+		{
+			if( other.gameObject.tag == "Fire" )
+			{
+				TakeFireDamage( fireDamageAmt );//Set value in inspector.
+			}
+		}
+
+		void OnTriggerExit( Collider other )
+		{
+			//
 		}
 
 		void TakeDamage( int damage ) //variable for argument
 		{
 			buildingHealth -= damage;			
+		}
+
+		void TakeFireDamage( float fdamage )
+		{
+			buildingHealth -= fdamage * Time.deltaTime;
 		}
 
 		void CollapseStructure()
