@@ -8,13 +8,18 @@ public class BuildWallAction : GoapAction {
 	float startTime = 0;
 	public float buildWallDuration = 30; // seconds
 	public List<GameObject> walls = new List<GameObject>();//a list of all wall game objects
-	Health health;
+	//Health health;
 
 	//The AI should go to which ever wall is damaged to repair it.
 	
 	void Start()
 	{
-		health = gameObject.FindWithTag("Wall").GetComponent<Health>();
+		//health = gameObject.FindWithTag("Wall").GetComponent<Health>();
+
+		foreach( GameObject wall in walls )
+		{
+			wall.GetComponent<BuildingHealth>();
+		}
 	}
 
 	public BuildWallAction () {
@@ -43,7 +48,8 @@ public class BuildWallAction : GoapAction {
 	{	
 		foreach( GameObject wall in walls )
 		{
-			if (wall.health.damage > 50 )
+			
+			if( wall.GetComponent<BuildingHealth>.damage > 50 )
 			{
 				target = wall;
 				return true;
