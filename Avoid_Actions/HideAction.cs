@@ -15,7 +15,7 @@ public class HideAction : GoapAction {
 	{
 		anim = this.GetComponent<Animator>();
 		//lookTarget = this.GetComponent<LookAt>();
-		player = gameObject.FindWithTag("Player");
+		player = GameObject.FindWithTag("Player");
 	}
 
 	public HideAction () {
@@ -46,7 +46,10 @@ public class HideAction : GoapAction {
 		float distFromPlayer = Vector3.Distance( player.transform.position, transform.position );//Check to see if distance from player >=20 meters.
 		
 		if( distFromPlayer > 20.0f )//If far enough away from player, crouch or whatever.
-		return true;
+        {
+            return true;
+        }
+		return false;
 	}
 	
 	public override bool perform (GameObject agent)
