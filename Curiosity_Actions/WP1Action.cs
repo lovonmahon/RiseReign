@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Waypoint idea borrowed from Holistic3d 'Simple waypoint  pathfinding with the Line of Sight AI'
+//Waypoint idea borrowed from Holistic3d 'Simple waypoint  pathfinding with the Line of Sight AI' and Daniel McCluskey Spy vs Guard AI.
 
 public class  WP1Action : GoapAction {
 
