@@ -14,8 +14,8 @@ public class  WP1Action : GoapAction {
 	//public float workDuration = 2; // seconds
 	
 	public PatrolAction () {
-		addPrecondition ("atWP1", false); 
-		addEffect ("atWP1", true);
+		//addPrecondition ("atWP1", false); 
+		addEffect ("needsToHide", true);
 		name = "WP1Action";
 	}
 	
@@ -37,13 +37,20 @@ public class  WP1Action : GoapAction {
 	
 	public override bool checkProceduralPrecondition (GameObject agent)
 	{	
-		return true;
+		Sight m_sight = this.GetComponent<Sight>();
+		GameObject player = m_sight.GetVisibleTargets();
+
+		if( player == null)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	public override bool perform (GameObject agent)
 	{
 		completed = true
-		return true;
+		return completed;
 	}
 	
 }
