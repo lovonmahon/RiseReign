@@ -114,5 +114,19 @@ namespace RiseReign {
 			}
 			return new Vector3(Mathf.Sin(a_fAngleDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(a_fAngleDegrees * Mathf.Deg2Rad));
 		}
+		
+		//returns the gameobject of the visible transform to provide the gameobject to the goap actions' preconditions
+		//where a game object is needed.
+		public GameObject GetVisibleTargets()
+		{
+			foreach( Transform target in m_visibleTargets )
+			{
+				if( target.CompareTag("Player")
+				{
+					return target.gameObject;
+				}
+			}
+			return null;
+		}
 	}
 }		
