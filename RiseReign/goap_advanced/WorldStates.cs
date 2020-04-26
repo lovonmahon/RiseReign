@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class WorldStates{
+public class WorldState{
     public string key;
     public int value;
 }
 
-public class WorldStates : MonoBehaviour
+public class WorldStates
 {
     public Dictionary<string, int> states;
 
@@ -36,13 +36,13 @@ public class WorldStates : MonoBehaviour
                 RemoveState(key);
         }
         else
-            states.Add( key, value)
+            states.Add( key, value);
     }
 
     public void RemoveState( string key)
     {
         if(states.ContainsKey(key))
-        states.Remove(key)
+            states.Remove(key);
     }
 
     public void SetState( string key, int value)

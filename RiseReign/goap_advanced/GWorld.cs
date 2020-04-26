@@ -2,17 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GWorld : MonoBehaviour
+public sealed class GWorld
 {
-    // Start is called before the first frame update
-    void Start()
+    private static readonly GWorld instance = new GWorld();//Make sure only one instance of the GWorld is accessed. This is a singleton
+    private static WorldStates world;//Dictionary to hold world states.
+    
+
+    static GWorld()
     {
-        
+        world = new WorldStates();
     }
 
-    // Update is called once per frame
-    void Update()
+    private GWorld()
+    {}
+
+    public static GWorld Instance//can be accessed using a singleton.
     {
-        
+        get { return instance; }
+    }
+
+    public WorldStates GetWorld()
+    {
+        return world;//return th status of the world.
     }
 }
