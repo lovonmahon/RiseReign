@@ -46,7 +46,7 @@ public class GAgent : MonoBehaviour
     {
         if( currentAction != null && currentAction.running )
         {
-            if( currentAction.agent.hasPath && currentAction.agent.remainingDistance < 1.0f)//navmesh code
+            if( currentAction.agent.hasPath && currentAction.agent.remainingDistance < 2.0f)//navmesh code
             {
                 if( !invoked)
                 {
