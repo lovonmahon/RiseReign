@@ -13,11 +13,12 @@ public abstract class GAction : MonoBehaviour
     public WorldState[] preConditions;
     public WorldState[] afterEffects;
     public NavMeshAgent agent;
+    public GInventory inventory;
 
     public Dictionary<string, int> preconditions;
     public Dictionary<string, int> effects;
 
-    public WorldStates agentBeliefs;//agent's internal states, what they believe.
+    public WorldStates beliefs;//agent's internal states, what they believe.
 
     public bool running = false;//is the state running?
 
@@ -46,6 +47,9 @@ public abstract class GAction : MonoBehaviour
                 effects.Add( w.key, w.value);
             }
         }
+        inventory = this.GetComponent<GAgent>().inventory;
+        //Needs to access the beliefs in order to confirm if an action can be run.
+        beliefs = this.GetComponent<GAgent>().beliefs;
     }
 
     public bool IsAchievable()//does not require preconditions
