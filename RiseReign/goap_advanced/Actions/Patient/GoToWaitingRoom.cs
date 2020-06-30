@@ -15,6 +15,7 @@ public class GoToWaitingRoom : GAction
     {
         GWorld.Instance.GetWorld().ModifyState("Waiting", 1);//Inject in the world state that a single patient is waiting.
         GWorld.Instance.AddPatient(this.gameObject);//This will actually add the patient to the queue for the nurse to treat.
+        beliefs.ModifyState("atHospital", 1);//The patient will inject this as a precondition before being treated.
         return true;
     }
 }
