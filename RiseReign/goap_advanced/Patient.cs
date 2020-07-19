@@ -14,6 +14,9 @@ public class Patient : GAgent
 
         SubGoal s2 = new SubGoal("isTreated", 5, true);//highest priority.
         goals.Add( s2, 3); //the higher the number, the higher the action priority.
+
+        SubGoal s3 = new SubGoal("atHome", 4, true);
+        goals.Add( s3, 3);
     }
 
     

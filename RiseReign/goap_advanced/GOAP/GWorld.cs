@@ -22,6 +22,7 @@ public sealed class GWorld
         //If there is a cubicle object, make one available in the world state so agent can use it.
         if(cubes.Length > 0)
             world.ModifyState("FreeCubicle", cubes.Length);//agent isn't modifying this state, the world is(global).  It can be used as a precondition.
+        Time.timeScale = 5;//This speeds up the world scene for testing.  Disable for production.
     }
 
     private GWorld()

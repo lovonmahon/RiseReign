@@ -48,7 +48,9 @@ public class GAgent : MonoBehaviour
     {
         if( currentAction != null && currentAction.running )
         {
-            if( currentAction.agent.hasPath && currentAction.agent.remainingDistance < 2.0f)//navmesh code
+            //manually calculating remaining distance. Navmesh not accurate.
+            float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
+            if( currentAction.agent.hasPath && distanceToTarget < 2.0f)//( currentAction.agent.hasPath && currentAction.agent.remainingDistance < 2.0f)//navmesh code
             {
                 if( !invoked)
                 {
