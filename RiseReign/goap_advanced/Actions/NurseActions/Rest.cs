@@ -13,6 +13,7 @@ public class Rest : GAction
     // Update is called once per frame
     public override bool PostPerform()
     {
+        beliefs.RemoveState("exhausted");
         return true;
     }
 }
