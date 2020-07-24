@@ -9,6 +9,7 @@ public sealed class GWorld
     private static Queue<GameObject> patients;//patients will add themselves to the queue so the nurse can treat them
     private static Queue<GameObject> cubicles;
     private static Queue<GameObject> offices;
+    private static Queue<GameObject> restrooms;
 
     static GWorld()
     {
@@ -16,6 +17,7 @@ public sealed class GWorld
         patients = new Queue<GameObject>();
         cubicles = new Queue<GameObject>();
         offices = new Queue<GameObject>();
+        restrooms = new Queue<GameObject>();
 
         //grab all cubicles in the world
         GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cubicle");
@@ -33,6 +35,13 @@ public sealed class GWorld
         if(offs.Length > 0)
             world.ModifyState("FreeOffice", offs.Length);//agent isn't modifying this state, the world is(global).  It can be used as a precondition.
         
+        GameObject[] restrms = GameObject.FindGameObjectsWithTag("RestRoom");
+        foreach(GameObject r in restrms)
+            restrooms.Enqueue(r);
+        //If there is a restroom object, make one available in the world state so agent can use it.
+        if(restrms.Length > 0)
+            world.ModifyState("FreeRestRoom", restrms.Length);//agent isn't modifying this state, the world is(global).  It can be used as a precondition.
+
         Time.timeScale = 5;//This speeds up the world scene for testing.  Disable for production.
     }
 
@@ -74,6 +83,19 @@ public sealed class GWorld
     {
         if(offices.Count == 0) return null;//no offices in queue, so return null list
         return offices.Dequeue();
+    }
+
+    //add restroom
+    public void AddRestRoom(GameObject r) 
+    {
+        restrooms.Enqueue(r);    
+    }
+
+    //remove restroom from list
+    public GameObject RemoveRestRoom()
+    {
+        if(restrooms.Count == 0) return null;//no restrooms in queue, so return null list
+        return restrooms.Dequeue();
     }
 
     public static GWorld Instance//can be accessed using a singleton.

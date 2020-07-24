@@ -28,6 +28,8 @@ public class GAgent : MonoBehaviour
     public GAction currentAction;//what the agent is doing at a particular time
     SubGoal currentGoal;//What is the current goal of the agent?
 
+    Vector3 destination = Vector3.zero;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -49,8 +51,8 @@ public class GAgent : MonoBehaviour
         if( currentAction != null && currentAction.running )
         {
             //manually calculating remaining distance. Navmesh not accurate.
-            float distanceToTarget = Vector3.Distance(currentAction.target.transform.position, this.transform.position);
-            if( currentAction.agent.hasPath && distanceToTarget < 2.0f)//( currentAction.agent.hasPath && currentAction.agent.remainingDistance < 2.0f)//navmesh code
+            float distanceToTarget = Vector3.Distance(destination, this.transform.position);
+            if( distanceToTarget < 2.0f)//( currentAction.agent.hasPath && currentAction.agent.remainingDistance < 2.0f)//navmesh code
             {
                 if( !invoked)
                 {
@@ -102,7 +104,14 @@ public class GAgent : MonoBehaviour
                 if( currentAction.target != null)
                 {
                     currentAction.running = true;
-                    currentAction.agent.SetDestination( currentAction.target.transform.position);
+                    destination = currentAction.target.transform.position;
+                    //this will find the object named "Destination" for each resource.
+                    Transform dest = currentAction.target.transform.Find("Destination");
+                    if(dest != null)
+                    {
+                        destination = dest.position;
+                    }
+                    currentAction.agent.SetDestination( destination);
                 }
             }
             else
