@@ -7,6 +7,7 @@ public class GoHome : GAction
     // Start is called before the first frame update
     public override bool PrePerform()
     {
+        beliefs.RemoveState("atHospital");//Agent knows it's no longer at hospital; any hospital related actions will not be possible.
         return true;
     }
 
