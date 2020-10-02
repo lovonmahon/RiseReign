@@ -32,6 +32,12 @@ public class Enemy : MonoBehaviour
         Debug.Log("Hit "  + other.transform.name);
         if(other.tag == "Player")
         {
+            //Null check to make sure component is not null...
+            Player player = other.transform.GetComponent<Player>();
+            if( player != null)
+            {
+                player.Damage();//call damage on player script
+            }
             Destroy(this.gameObject);
         }
         if(other.tag == "Laser")
