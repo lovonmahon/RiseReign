@@ -27,7 +27,7 @@ public class SpawnManager : MonoBehaviour
         //yield return null;//Wait for 1 frame
 
         int numSpawned = 0;        
-        while ( numSpawned < 5 && _stopSpawning == true)
+        while ( numSpawned < 5 && _stopSpawning == false )
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
