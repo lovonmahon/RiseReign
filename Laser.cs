@@ -7,13 +7,7 @@ public class Laser : MonoBehaviour
     [SerializeField]
     float laserSpeed = 8.0f;
 
-        
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+           
     // Update is called once per frame
     void Update()
     {
@@ -30,6 +24,10 @@ public class Laser : MonoBehaviour
     {
         if(transform.position.y >= 7.01)
         {
+            if(transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);//Destroys both the parents and the children ojects.
+            }
             Destroy(this.gameObject);
         }
     }

@@ -7,22 +7,27 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     GameObject _enemyPrefab;
     [SerializeField]
+    GameObject _tripleShotPowerupPrefab;
+    [SerializeField]
+    GameObject _speedBoostPrefab;
+    [SerializeField]
+    GameObject _shieldPrefab;
+
+    [SerializeField]
     float _top = 7.08f;
     [SerializeField]
     GameObject _enemyContainer;
     bool _stopSpawning = false;
     void Start()
     {
-        StartCoroutine("Spawn", 2.0f);
+        StartCoroutine("EnemySpawn", 2.0f);
+        StartCoroutine("TripleShotPowerupSpawn", 2.0f);
+        StartCoroutine("SpeedBoostPowerupSpawn", 5.0f);
+        StartCoroutine("ShieldPowerupSpawn");
     }
 
-   void Update() 
-   {
-
-   }
-
-
-    IEnumerator Spawn()
+  
+    IEnumerator EnemySpawn()
     {
         //yield return null;//Wait for 1 frame
 
@@ -36,6 +41,39 @@ public class SpawnManager : MonoBehaviour
             numSpawned++;
             yield return new WaitForSeconds(5.0f);
         }
+    }
+
+    IEnumerator TripleShotPowerupSpawn()
+    {
+        while( _stopSpawning == false )
+        {
+            Vector3 tripleshotPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
+            GameObject newTripleShotPowerup = Instantiate(_tripleShotPowerupPrefab, tripleshotPosToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+        }
+        
+    }
+
+    IEnumerator SpeedBoostPowerupSpawn()
+    {
+        while( _stopSpawning == false )
+        {
+            Vector3 speedBoostPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
+            GameObject newSpeedBoostPowerup = Instantiate(_speedBoostPrefab, speedBoostPosToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+        }
+        
+    }
+
+    IEnumerator ShieldPowerupSpawn()
+    {
+        while( _stopSpawning == false )
+        {
+            Vector3 shieldPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
+            GameObject newShieldPowerup = Instantiate(_shieldPrefab, shieldPosToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(6.0f, 12.0f));
+        }
+        
     }
 
     public void OnPlayerDeath()

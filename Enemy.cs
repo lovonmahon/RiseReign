@@ -7,14 +7,23 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float _speed = 4.0f;
     float _top = 7.08f;
-    [SerializeField]
-    GameObject _player;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //[SerializeField]
+    //GameObject _player;
+   
 
+    Player playerScript;
+
+    void Start() {
+        {
+            playerScript = GameObject.Find("Player").GetComponent<Player>();
+            if(playerScript == null)
+            {
+                Debug.LogError("No Player component found.");
+            }
+        }
+    }
+    
+    
     // Update is called once per frame
     void Update()
     {
@@ -44,6 +53,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(other.gameObject);
             Destroy(this.gameObject);
+            playerScript.AddScore(10);        
         }
     }
 }
