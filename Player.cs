@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
         //Start the player at position zero.
         transform.position = new Vector3(0,0,0);
         laser = gameObject.GetComponent<Laser>();
@@ -60,7 +59,7 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             ShootLaser();
-        }
+        }        
     }
 
     void CalculateMovement()
@@ -107,11 +106,13 @@ public class Player : MonoBehaviour
         if(_isShieldActive == true)
         return;
         else _lives--;//Subtract one
+        _uiManager.UpdateLives(_lives);//Update lives display on UI.
 
         if(_lives < 1)
         {
             spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
+            //_uiManager.GameOver();
         }
     }
 

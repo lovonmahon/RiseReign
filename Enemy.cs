@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     float _top = 7.08f;
     //[SerializeField]
     //GameObject _player;
+    [SerializeField]
+    Animator _anim;
    
 
     Player playerScript;
@@ -19,6 +21,11 @@ public class Enemy : MonoBehaviour
             if(playerScript == null)
             {
                 Debug.LogError("No Player component found.");
+            }
+            _anim = GetComponent<Animator>();
+            if(_anim == null)
+            {
+                Debug.LogError("Animator component not attached");
             }
         }
     }
@@ -47,12 +54,16 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();//call damage on player script
             }
-            Destroy(this.gameObject);
+            _anim.SetTrigger("onEnemyDeath");
+            _speed = 0f;//Stops trigger components from stil moving into the player to cause damage.
+            Destroy(this.gameObject, 2.8f);
         }
         if(other.tag == "Laser")
         {
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            _anim.SetTrigger("onEnemyDeath");
+            _speed = 0f;
+            Destroy(this.gameObject, 2.8f);//Waits to allow the explode animation to play
             playerScript.AddScore(10);        
         }
     }
