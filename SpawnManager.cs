@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     GameObject _enemyContainer;
     bool _stopSpawning = false;
-    void Start()
+    public void StartSpawning()
     {
         StartCoroutine("EnemySpawn", 2.0f);
         StartCoroutine("TripleShotPowerupSpawn", 2.0f);
@@ -30,6 +30,7 @@ public class SpawnManager : MonoBehaviour
     IEnumerator EnemySpawn()
     {
         //yield return null;//Wait for 1 frame
+        yield return new WaitForSeconds(3.0f);//wait before spawning
 
         int numSpawned = 0;        
         while ( numSpawned < 5 && _stopSpawning == false )
@@ -45,6 +46,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator TripleShotPowerupSpawn()
     {
+        yield return new WaitForSeconds(3.0f);//wait before spawning
         while( _stopSpawning == false )
         {
             Vector3 tripleshotPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
@@ -56,6 +58,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpeedBoostPowerupSpawn()
     {
+        yield return new WaitForSeconds(3.0f);//wait before spawning
         while( _stopSpawning == false )
         {
             Vector3 speedBoostPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
@@ -67,6 +70,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator ShieldPowerupSpawn()
     {
+        yield return new WaitForSeconds(3.0f);//wait before spawning
         while( _stopSpawning == false )
         {
             Vector3 shieldPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);

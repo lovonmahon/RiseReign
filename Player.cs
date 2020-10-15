@@ -29,6 +29,10 @@ public class Player : MonoBehaviour
     PowerUp powerUp;
     [SerializeField]
     GameObject _playerShield;
+    [SerializeField]
+    GameObject _rightEngine;
+    [SerializeField]
+    GameObject _leftEngine;
     
     UIManager _uiManager;
 
@@ -50,6 +54,8 @@ public class Player : MonoBehaviour
         }
         
         _playerShield.SetActive(false);
+        _rightEngine.SetActive(false);
+        _leftEngine.SetActive(false);
     }
 
     // Update is called once per frame
@@ -107,6 +113,15 @@ public class Player : MonoBehaviour
         return;
         else _lives--;//Subtract one
         _uiManager.UpdateLives(_lives);//Update lives display on UI.
+
+        if(_lives == 2)
+        {
+            _rightEngine.SetActive(true);
+        }
+        else if(_lives == 1)
+        {
+            _leftEngine.SetActive(true);
+        }
 
         if(_lives < 1)
         {
