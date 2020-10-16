@@ -14,6 +14,8 @@ public class PowerUp : MonoBehaviour
     [Tooltip("0-3 for tripleshot, speed boost or shield")]
     [SerializeField]
     int _powerUpType = 0;
+    [SerializeField]
+    AudioSource _audioPowerup;
     
     Player _player;
     
@@ -24,6 +26,11 @@ public class PowerUp : MonoBehaviour
         if(_player == null)
         {
             Debug.LogError("'Player' component not found!");
+        }
+        _audioPowerup = GameObject.Find("Powerup").GetComponent<AudioSource>();
+        if(_audioPowerup == null)
+        {
+            Debug.LogError("The audio Source is not found");
         }
     }
 
@@ -46,12 +53,15 @@ public class PowerUp : MonoBehaviour
             {
                 case 0: 
                     _player.ActivateTripleshot();
+                    _audioPowerup.Play();
                     break;
                 case 1:
                     _player.ActivateSpeedBoost();
+                    _audioPowerup.Play();
                     break;
                 case 2:
                     _player.ActivateShield();
+                    _audioPowerup.Play();
                     break;
                 default:
                     Debug.Log("Ability error");

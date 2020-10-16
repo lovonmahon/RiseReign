@@ -7,6 +7,8 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     GameObject _asteroidExplosion;
     SpawnManager _spawnManager;
+    [SerializeField]
+    AudioSource _audioExplosion;
    
 void Start() 
 {
@@ -29,6 +31,7 @@ void Start()
         if(other.tag == "Laser")
         {
             Instantiate(_asteroidExplosion, transform.position, Quaternion.identity);
+            _audioExplosion.Play();
             Destroy(other.gameObject);
             _spawnManager.StartSpawning();
             Destroy(this.gameObject, 0.25f);

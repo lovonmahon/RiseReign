@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     //GameObject _player;
     [SerializeField]
     Animator _anim;
+    [SerializeField]
+    AudioSource _audioExplosion;
    
 
     Player playerScript;
@@ -26,6 +28,11 @@ public class Enemy : MonoBehaviour
             if(_anim == null)
             {
                 Debug.LogError("Animator component not attached");
+            }
+            _audioExplosion = GameObject.Find("Explosion").GetComponent<AudioSource>();//Get the parented explosion game object.
+            if(_audioExplosion == null)
+            {
+                Debug.LogError("The audio source is not found");
             }
         }
     }
@@ -55,6 +62,7 @@ public class Enemy : MonoBehaviour
                 player.Damage();//call damage on player script
             }
             _anim.SetTrigger("onEnemyDeath");
+            _audioExplosion.Play();
             _speed = 0f;//Stops trigger components from stil moving into the player to cause damage.
             Destroy(this.gameObject, 2.8f);
         }
@@ -62,8 +70,9 @@ public class Enemy : MonoBehaviour
         {
             Destroy(other.gameObject);
             _anim.SetTrigger("onEnemyDeath");
+            _audioExplosion.Play();
             _speed = 0f;
-            Destroy(this.gameObject, 2.8f);//Waits to allow the explode animation to play
+            Destroy(this.gameObject, 2.0f);//Waits to allow the explode animation to play
             playerScript.AddScore(10);        
         }
     }

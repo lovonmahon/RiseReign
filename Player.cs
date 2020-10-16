@@ -36,6 +36,12 @@ public class Player : MonoBehaviour
     
     UIManager _uiManager;
 
+    [SerializeField]
+    AudioSource _audioLaser;
+    [SerializeField]
+    AudioSource _audioExplosion;
+    
+
     void Start()
     {
         //Start the player at position zero.
@@ -104,6 +110,7 @@ public class Player : MonoBehaviour
             //powerUp.ShotsFired();
         }
         else Instantiate(laserPrefab, transform.position + new Vector3(0,0.8f,0), Quaternion.identity);
+        _audioLaser.Play();
     }
 
 
@@ -126,8 +133,8 @@ public class Player : MonoBehaviour
         if(_lives < 1)
         {
             spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
-            //_uiManager.GameOver();
+            _audioExplosion.Play();
+            Destroy(this.gameObject, 1.0f);
         }
     }
 

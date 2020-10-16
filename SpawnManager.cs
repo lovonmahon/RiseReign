@@ -33,7 +33,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3.0f);//wait before spawning
 
         int numSpawned = 0;        
-        while ( numSpawned < 5 && _stopSpawning == false )
+        while ( numSpawned < 25 && _stopSpawning == false )
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
@@ -51,7 +51,7 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 tripleshotPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
             GameObject newTripleShotPowerup = Instantiate(_tripleShotPowerupPrefab, tripleshotPosToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            yield return new WaitForSeconds(Random.Range(35.0f, 50.0f));
         }
         
     }
@@ -63,7 +63,7 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 speedBoostPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
             GameObject newSpeedBoostPowerup = Instantiate(_speedBoostPrefab, speedBoostPosToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            yield return new WaitForSeconds(Random.Range(30.0f, 60.0f));
         }
         
     }
@@ -75,7 +75,7 @@ public class SpawnManager : MonoBehaviour
         {
             Vector3 shieldPosToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
             GameObject newShieldPowerup = Instantiate(_shieldPrefab, shieldPosToSpawn, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(6.0f, 12.0f));
+            yield return new WaitForSeconds(Random.Range(30.0f, 45.0f));
         }
         
     }
