@@ -40,6 +40,7 @@ public class Player : MonoBehaviour
     AudioSource _audioLaser;
     [SerializeField]
     AudioSource _audioExplosion;
+    Animator _anim;
     
 
     void Start()
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
         laser = gameObject.GetComponent<Laser>();
         spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _anim = GetComponent<Animator>();
         if(spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
@@ -57,6 +59,10 @@ public class Player : MonoBehaviour
         if( _uiManager == null)
         {
             Debug.Log("UIManager component not found.");
+        }
+        if(_anim == null)
+        {
+            Debug.LogError("Animator component not attached");
         }
         
         _playerShield.SetActive(false);
@@ -106,10 +112,13 @@ public class Player : MonoBehaviour
         
         if( _isTripleShotActive == true )
         {
-            Instantiate(tripleShotLaser, transform.position + new Vector3(-0.404f,0.012f,0f), Quaternion.identity);
-            //powerUp.ShotsFired();
+            Instantiate(tripleShotLaser, transform.position + new Vector3(-0.404f,0.2f,0f), Quaternion.identity);
         }
-        else Instantiate(laserPrefab, transform.position + new Vector3(0,0.8f,0), Quaternion.identity);
+        else
+        {
+            Instantiate(laserPrefab, transform.position + new Vector3(0,1.0f,0), Quaternion.identity);
+        }
+         
         _audioLaser.Play();
     }
 
@@ -134,6 +143,7 @@ public class Player : MonoBehaviour
         {
             spawnManager.OnPlayerDeath();
             _audioExplosion.Play();
+            _anim.SetTrigger("Death");
             Destroy(this.gameObject, 1.0f);
         }
     }
@@ -199,4 +209,5 @@ public class Player : MonoBehaviour
         
         
     }
+    
 }

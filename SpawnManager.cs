@@ -33,7 +33,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3.0f);//wait before spawning
 
         int numSpawned = 0;        
-        while ( numSpawned < 25 && _stopSpawning == false )
+        while ( numSpawned < 75 && _stopSpawning == false )
         {
             Vector3 posToSpawn = new Vector3(Random.Range(-8.0f, 8.29f), _top, 0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    float _speed = 4.0f;
+    float _speed = 3.0f;
     float _top = 7.08f;
     //[SerializeField]
     //GameObject _player;
@@ -13,7 +13,12 @@ public class Enemy : MonoBehaviour
     Animator _anim;
     [SerializeField]
     AudioSource _audioExplosion;
-   
+    
+    [SerializeField]
+    GameObject _enemyLaser;
+    float _canFire = -1.0f;
+    [SerializeField]
+    float _enemyFireRate = 1.0f;
 
     Player playerScript;
 
@@ -33,7 +38,7 @@ public class Enemy : MonoBehaviour
             if(_audioExplosion == null)
             {
                 Debug.LogError("The audio source is not found");
-            }
+            }            
         }
     }
     
@@ -41,12 +46,32 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateMovement();
+        if(Time.time > _canFire)
+        {
+            _enemyFireRate = Random.Range(1.0f, 2.0f);
+            _canFire = Time.time + _enemyFireRate;
+            _enemyLaser =  Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+            //Grab the laser component from each laser child
+            Laser[] lasers = _enemyLaser.GetComponentsInChildren<Laser>();
+            //Loop through the laser children and  have each laser component call the AssignEnemyLaser()
+            for(int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+        }
+    }
+
+    void CalculateMovement()
+    {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
         if(transform.position.y < -5.08f)
         {
             float randomX = Random.Range(-8.0f, 8.29f);
             transform.position = new Vector3(randomX, _top, 0);
+            Instantiate(_enemyLaser, transform.position, Quaternion.identity);
+            //Debug.Break();//Pause game.
         }
     }
 
@@ -72,6 +97,7 @@ public class Enemy : MonoBehaviour
             _anim.SetTrigger("onEnemyDeath");
             _audioExplosion.Play();
             _speed = 0f;
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.0f);//Waits to allow the explode animation to play
             playerScript.AddScore(10);        
         }

@@ -6,22 +6,44 @@ public class Laser : MonoBehaviour
 {
     [SerializeField]
     float laserSpeed = 8.0f;
+    bool _isEnemyLaser = false;
+    Player _player;
 
            
-    // Update is called once per frame
+    void Start() 
+    {
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if(_player == null)
+        {
+            Debug.LogError("Player component not found");
+        }
+    }
+
     void Update()
     {
-        Shoot();
-        DestroyLaser();
+        if(_isEnemyLaser == false)
+        {
+            MoveUp();
+        }
+        else MoveDown();       
     }
 
-    public void Shoot()
+    void MoveDown()
+    {
+        transform.Translate(Vector3.down * laserSpeed * Time.deltaTime);
+        if(transform.position.y < -7.01)
+        {
+            if(transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);//Destroys both the parents and the children ojects.
+            }
+            Destroy(this.gameObject);
+        }
+    }
+
+    void MoveUp()
     {
         transform.Translate(Vector3.up * laserSpeed * Time.deltaTime);
-    }
-
-    void DestroyLaser()
-    {
         if(transform.position.y >= 7.01)
         {
             if(transform.parent != null)
@@ -29,6 +51,18 @@ public class Laser : MonoBehaviour
                 Destroy(transform.parent.gameObject);//Destroys both the parents and the children ojects.
             }
             Destroy(this.gameObject);
+        }
+    }
+    public void AssignEnemyLaser()
+    {
+        _isEnemyLaser = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Player")
+        {
+            _player.Damage();
         }
     }
 }

@@ -9,6 +9,8 @@ public class Asteroid : MonoBehaviour
     SpawnManager _spawnManager;
     [SerializeField]
     AudioSource _audioExplosion;
+    [SerializeField]
+    GameObject _infoText;
    
 void Start() 
 {
@@ -17,6 +19,7 @@ void Start()
     {
         Debug.LogError("No SpanManager component found.");
     }
+    _infoText.SetActive(true);
 
 }
 
@@ -35,6 +38,7 @@ void Start()
             Destroy(other.gameObject);
             _spawnManager.StartSpawning();
             Destroy(this.gameObject, 0.25f);
+            _infoText.SetActive(false);
         }
     }
 }
