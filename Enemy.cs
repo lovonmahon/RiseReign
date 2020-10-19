@@ -70,8 +70,6 @@ public class Enemy : MonoBehaviour
         {
             float randomX = Random.Range(-8.0f, 8.29f);
             transform.position = new Vector3(randomX, _top, 0);
-            Instantiate(_enemyLaser, transform.position, Quaternion.identity);
-            //Debug.Break();//Pause game.
         }
     }
 
