@@ -8,13 +8,13 @@ public class GetPatient : GAction
 
     public override bool PrePerform()
     {
-        target = GWorld.Instance.RemovePatient();//removes the patient from the queue so he/she no longer can be considered waiting to be checked
+        target = GWorld.Instance.GetQueue("patients").RemoveResource();//removes the patient from the queue so he/she no longer can be considered waiting to be checked
         if(target == null)
         {
             return false;
         }
         //Take a cubicle out of the waiting list queue to be used.
-        resource = GWorld.Instance.RemoveCubicle();
+        resource = GWorld.Instance.GetQueue("cubicles").RemoveResource();
         //check to make the resource is not null.
         if( resource != null )
         {
@@ -23,7 +23,7 @@ public class GetPatient : GAction
 
         else
         {
-            GWorld.Instance.AddPatient(target);//if the cubicle is not available, add the patient ack to the waiting list until one becomes available.
+            GWorld.Instance.GetQueue("patients").AddResource(target);//if the cubicle is not available, add the patient back to the waiting list until one becomes available.
             target = null;
             return false;
         }

@@ -8,7 +8,7 @@ public class RestroomBreak : GAction
     public override bool PrePerform()
     {
         //Remove an office from the queue to be used
-        target = GWorld.Instance.RemoveRestRoom();
+        target = GWorld.Instance.GetQueue("restrooms").RemoveResource();
         if(target == null)//if there are no restrooms available, return false
         {
             return false;
@@ -22,10 +22,14 @@ public class RestroomBreak : GAction
     // Update is called once per frame
     public override bool PostPerform()
     {
-        GWorld.Instance.AddRestRoom(target);//add the restroom back to the available for use queue
-        inventory.RemoveItem(target);//remove the restroom from the agent directory  No longer needed
-        GWorld.Instance.GetWorld().ModifyState("FreeRestRoom", 1);//Update the available office to 1.
-        beliefs.RemoveState("toiletbreak");//The agent has used the toilet and the need it reset.
+        //add the restroom back to the available for use queue
+        GWorld.Instance.GetQueue("restrooms").AddResource(target);
+        //remove the restroom from the agent directory  No longer needed
+        inventory.RemoveItem(target);
+        //Update the available office to 1.
+        GWorld.Instance.GetWorld().ModifyState("FreeRestRoom", 1);
+        //The agent has used the toilet and the need it reset.
+        beliefs.RemoveState("toiletbreak");
         return true;
     }
 }

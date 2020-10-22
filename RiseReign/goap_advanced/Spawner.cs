@@ -17,7 +17,7 @@ public class Spawner : MonoBehaviour
         StartCoroutine("Spawn", 5);
     }
 
-    IEnumerator Spawn()//to avoid the for loop spawning all prefavs at once, have this function get called separately per round o floop.
+    IEnumerator Spawn()//to avoid the for loop spawning all prefabs at once, have this function get called separately per round o floop.
     {
         for(int i = 0; i < numPatients; i++)        
         {

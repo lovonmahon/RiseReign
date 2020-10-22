@@ -8,23 +8,29 @@ public class Research : GAction
     public override bool PrePerform()
     {
         //Remove an office from the queue to be used
-        target = GWorld.Instance.RemoveOffice();
-        if(target == null)//if there ar eno offices available, return false
+        target = GWorld.Instance.GetQueue("offices").RemoveResource();
+        //if there ar eno offices available, return false
+        if(target == null)
         {
+            //No office available so return false
             return false;
         }
         //If there is an office in the queue for use, add it to the agent's inventory.
         inventory.AddItem(target);
-        GWorld.Instance.GetWorld().ModifyState("FreeOffice", -1);//lessen the available amount of offices since it is being used.
+        //lessen the available amount of offices since it is being used.
+        GWorld.Instance.GetWorld().ModifyState("FreeOffice", -1);
         return true;
     }
 
     // Update is called once per frame
     public override bool PostPerform()
     {
-        GWorld.Instance.AddOffice(target);//add the office back to the available for use queue
-        inventory.RemoveItem(target);//remove the office from the agne't directory  No longer needed
-        GWorld.Instance.GetWorld().ModifyState("FreeOffice", 1);//Update the available office to 1.
+        //Add the office back to the available pool
+        GWorld.Instance.GetQueue("offices").AddResource(target);
+        //Remove the office from the agent's inventosy since it's no longer needed
+        inventory.RemoveItem(target);
+        //Give the office back to the world.
+        GWorld.Instance.GetWorld().ModifyState("FreeOffice", 1);
         return true;
     }
 }

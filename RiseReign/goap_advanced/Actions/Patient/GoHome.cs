@@ -14,7 +14,7 @@ public class GoHome : GAction
     // Update is called once per frame
     public override bool PostPerform()
     {
-        Destroy(this.gameObject);//Destroys the GO once it finished it's task...unless they need to remain in the world.
+        Destroy(this.gameObject, 1.0f);//Destroys the GO once it finished it's task...unless they need to remain in the world. Delay 1 second for any processing that needs to finish.
         //For performance optimization, create a pool of patien prefab to re-use.
         return true;
     }

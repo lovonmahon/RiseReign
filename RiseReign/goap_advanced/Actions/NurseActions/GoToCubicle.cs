@@ -20,7 +20,7 @@ public class GoToCubicle : GAction
     {
         //Add a state to the world
         GWorld.Instance.GetWorld().ModifyState("TreatingPatient", 1);//Inject in the world state that a single patient is waiting.
-        GWorld.Instance.AddCubicle(target);//Make th cubicle available again once it's use is completed.
+        GWorld.Instance.GetQueue("cubicles").AddResource(target);//Make the cubicle available again once it's use is completed.
         //Once the patient is treated, remove the cubicle form the patient's inventory
         inventory.RemoveItem(target);
         GWorld.Instance.GetWorld().ModifyState("FreeCubicle", 1);//Change the state so other agents can know there's a free cubicle.

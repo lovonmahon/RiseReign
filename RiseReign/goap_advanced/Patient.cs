@@ -21,13 +21,13 @@ public class Patient : GAgent
         SubGoal s4 = new SubGoal("TakeRestroomBreak", 1, false); //goal is to use restroom, priority of 1 and do not remove it as a goal, let it repeat.
         goals.Add(s4, 4);
 
-        Invoke("NeedsRestroomBreak", Random.Range(5,10));//Invoke restroom break need.
+        Invoke("NeedsRestroomBreak", Random.Range(5.0f,10.0f));//Invoke restroom break need.
     }
 
     void NeedsRestroomBreak()
     {
         beliefs.ModifyState("toiletbreak", 0);
-        Invoke("NeedsRestroomBreak", Random.Range(5,10));//Once the Start() invokes this, it will continue to invoke itself randmly forever.
+        Invoke("NeedsRestroomBreak", Random.Range(5.0f,10.0f));//Once the Start() invokes this, it will continue to invoke itself randmly forever.
     }      
 
     //These base goals should not be injected into the world states or the agent's beliefs.

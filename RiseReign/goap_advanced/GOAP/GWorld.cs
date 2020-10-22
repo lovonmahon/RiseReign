@@ -2,102 +2,79 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class ResourceQueue
+{
+    public Queue<GameObject> que = new Queue<GameObject>();
+    public string tag;
+    public string modState;
+
+    public ResourceQueue(string t, string ms, WorldStates w)
+    {
+        tag = t;
+        modState = ms;
+        if(tag != "")
+        {
+            GameObject[] resources = GameObject.FindGameObjectsWithTag(tag);
+            foreach(GameObject r in resources)
+                que.Enqueue(r);
+        }
+
+        if(modState != "")
+        {
+            w.ModifyState(modState, que.Count);
+        }
+    }
+
+    public void AddResource(GameObject r)
+    {
+        que.Enqueue(r);
+    }
+
+    public GameObject RemoveResource()
+    {
+        if(que.Count == 0) return null;
+        return que.Dequeue();
+    }
+}
+
 public sealed class GWorld
 {
     private static readonly GWorld instance = new GWorld();//Make sure only one instance of the GWorld is accessed. This is a singleton
     private static WorldStates world;//Dictionary to hold world states.
-    private static Queue<GameObject> patients;//patients will add themselves to the queue so the nurse can treat them
-    private static Queue<GameObject> cubicles;
-    private static Queue<GameObject> offices;
-    private static Queue<GameObject> restrooms;
+    private static ResourceQueue patients;//patients will add themselves to the queue so the nurse can treat them
+    private static ResourceQueue cubicles;
+    private static ResourceQueue offices;
+    private static ResourceQueue restrooms;
+    private static ResourceQueue puddles;
+    private static Dictionary<string, ResourceQueue> resources = new Dictionary<string, ResourceQueue>();
 
     static GWorld()
     {
         world = new WorldStates();
-        patients = new Queue<GameObject>();
-        cubicles = new Queue<GameObject>();
-        offices = new Queue<GameObject>();
-        restrooms = new Queue<GameObject>();
+        patients = new ResourceQueue("","",world);//patients will be added when they register at hospital
+        resources.Add("patients", patients);//search the patients by string
+        cubicles = new ResourceQueue("Cubicle","FreeCubicle",world);//Tag, current state, world state
+        resources.Add("cubicles", cubicles);//search the cubicles by string
+        offices = new ResourceQueue("Office","FreeOffice",world);//Tag, current state, world state
+        resources.Add("offices", offices);//search the offices by string
+        restrooms = new ResourceQueue("RestRoom","FreeRestroom",world);//Tag, current state, world state
+        resources.Add("restrooms", restrooms);//search the restrooms by string
+        puddles = new ResourceQueue("Puddle", "FreePuddle",world);
+        resources.Add("puddles", puddles);
 
-        //grab all cubicles in the world
-        GameObject[] cubes = GameObject.FindGameObjectsWithTag("Cubicle");
-        foreach(GameObject c in cubes)
-            cubicles.Enqueue(c);
-        //If there is a cubicle object, make one available in the world state so agent can use it.
-        if(cubes.Length > 0)
-            world.ModifyState("FreeCubicle", cubes.Length);//agent isn't modifying this state, the world is(global).  It can be used as a precondition.
-
-        //grab all offices in the world
-        GameObject[] offs = GameObject.FindGameObjectsWithTag("Office");
-        foreach(GameObject o in offs)
-            offices.Enqueue(o);
-        //If there is a office object, make one available in the world state so agent can use it.
-        if(offs.Length > 0)
-            world.ModifyState("FreeOffice", offs.Length);//agent isn't modifying this state, the world is(global).  It can be used as a precondition.
         
-        GameObject[] restrms = GameObject.FindGameObjectsWithTag("RestRoom");
-        foreach(GameObject r in restrms)
-            restrooms.Enqueue(r);
-        //If there is a restroom object, make one available in the world state so agent can use it.
-        if(restrms.Length > 0)
-            world.ModifyState("FreeRestRoom", restrms.Length);//agent isn't modifying this state, the world is(global).  It can be used as a precondition.
-
         Time.timeScale = 5;//This speeds up the world scene for testing.  Disable for production.
+    }
+
+    public ResourceQueue GetQueue(string type)
+    {
+        return resources[type];
     }
 
     private GWorld()
     {}
     //add patient
-    public void AddPatient(GameObject p) 
-    {
-        patients.Enqueue(p);
-    }
-    //remote patient
-    public GameObject RemovePatient()
-    {
-        if(patients.Count == 0) return null;//no patients in queue, so return null list
-        return patients.Dequeue();
-    }
-
-    //add cubicle
-    public void AddCubicle(GameObject c) 
-    {
-        cubicles.Enqueue(c);    
-    }
-
-    //remove cubible from list
-    public GameObject RemoveCubicle()
-    {
-        if(cubicles.Count == 0) return null;//no cubicles in queue, so return null list
-        return cubicles.Dequeue();
-    }
-
-    //add office
-    public void AddOffice(GameObject o) 
-    {
-        offices.Enqueue(o);    
-    }
-
-    //remove office from list
-    public GameObject RemoveOffice()
-    {
-        if(offices.Count == 0) return null;//no offices in queue, so return null list
-        return offices.Dequeue();
-    }
-
-    //add restroom
-    public void AddRestRoom(GameObject r) 
-    {
-        restrooms.Enqueue(r);    
-    }
-
-    //remove restroom from list
-    public GameObject RemoveRestRoom()
-    {
-        if(restrooms.Count == 0) return null;//no restrooms in queue, so return null list
-        return restrooms.Dequeue();
-    }
-
+    
     public static GWorld Instance//can be accessed using a singleton.
     {
         get { return instance; }

@@ -13,9 +13,12 @@ public class GoToWaitingRoom : GAction
     // Update is called once per frame
     public override bool PostPerform()
     {
-        GWorld.Instance.GetWorld().ModifyState("Waiting", 1);//Inject in the world state that a single patient is waiting.
-        GWorld.Instance.AddPatient(this.gameObject);//This will actually add the patient to the queue for the nurse to treat.
-        beliefs.ModifyState("atHospital", 1);//The patient will inject this as a precondition before being treated.
+        //Inject in the world state that a single patient is waiting.
+        GWorld.Instance.GetWorld().ModifyState("Waiting", 1);
+        //This will actually add the patient to the queue for the nurse to treat.
+        GWorld.Instance.GetQueue("patients").AddResource(this.gameObject);
+        //The patient will inject this as a precondition before being treated.
+        beliefs.ModifyState("atHospital", 1);
         return true;
     }
 }
